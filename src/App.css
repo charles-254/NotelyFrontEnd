@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* color: "#16a085", */
