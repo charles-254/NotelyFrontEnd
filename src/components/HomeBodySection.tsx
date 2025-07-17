@@ -1,8 +1,5 @@
-
 function HomeBodySection() {
-  return (
-    <div>HomeBodySection</div>
-  )
+  return <div>HomeBodySection</div>;
 }
 
-export default HomeBodySection
+export default HomeBodySection;

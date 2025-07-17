@@ -5,7 +5,7 @@ function HomePage() {
   return (
     <>
       <HeroSection />
-      <HomeBodySection/>
+      <HomeBodySection />
     </>
   );
 }
