@@ -14,7 +14,7 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
@@ -31,9 +31,15 @@ import { IoOpenOutline } from "react-icons/io5";
 
 const drawerWidth = 160;
 
-export default function Sidebar() {
-  const [open, setOpen] = useState(true);
+function Sidebar() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [open, setOpen] = useState(() => {
+    const saved = localStorage.getItem("sidebarOpen");
+    return saved === null ? true : JSON.parse(saved);
+  });
+  useEffect(() => {
+    localStorage.setItem("sidebarOpen", JSON.stringify(open));
+  }, [open]);
 
   const navigate = useNavigate();
   return (
@@ -387,7 +393,7 @@ export default function Sidebar() {
               <ListItemButton onClick={() => navigate("/settings")}>
                 <ListItemText primary="Settings" />
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate("/settings/account")}>
                 <ListItemText primary="Account & security" />
               </ListItemButton>
               <ListItemButton>
@@ -451,6 +457,8 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default Sidebar;
 
 const styling = {
   tooltip: {

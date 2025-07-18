@@ -56,12 +56,12 @@ const Settings = () => {
           type="number"
           value={autosaveInterval}
           onChange={(e) => setAutosaveInterval(Number(e.target.value))}
-          sx={{ mb: 3, bgcolor:"inherit"}}
+          sx={{ mb: 3, bgcolor: "inherit" }}
         />
 
         <FormGroup sx={{ mb: 3 }}>
           <FormControlLabel
-          sx={{width:"fit-content"}}
+            sx={{ width: "fit-content" }}
             control={
               <Switch
                 checked={notificationsEnabled}
@@ -85,7 +85,7 @@ const Settings = () => {
             headings, or disable it for plain text editing.
           </Typography>
           <FormControlLabel
-          sx={{mb:'1.5rem', width:"fit-content"}}
+            sx={{ mb: "1.5rem", width: "fit-content" }}
             control={
               <Switch
                 checked={markdownEnabled}
@@ -101,7 +101,7 @@ const Settings = () => {
             you
           </Typography>
           <FormControlLabel
-          sx={{width:"fit-content"}}
+            sx={{ width: "fit-content" }}
             control={
               <Switch
                 checked={autoBullets}

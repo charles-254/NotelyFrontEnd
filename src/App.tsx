@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import DashboardPage from "./pages/DashboardPage";
 import Settings from "./pages/Settings";
+import AccountSecurityPage from "./pages/AccountSecurityPage";
 
 function App() {
   const client = new QueryClient();
@@ -43,6 +44,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/settings" element={<Settings />} />
+        </Routes>
+        <Routes>
+          <Route path="/settings/account" element={<AccountSecurityPage />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

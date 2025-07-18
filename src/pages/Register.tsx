@@ -110,7 +110,6 @@ function Register() {
     <Stack
       justifyContent={"center"}
       sx={{
-        height: "100vh",
         backgroundImage: 'url("auth.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
