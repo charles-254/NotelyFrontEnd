@@ -17,7 +17,7 @@ import {
   Lock,
 } from "@mui/icons-material";
 import { useMutation } from "@tanstack/react-query";
-import z from 'zod'
+import z from "zod";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -55,7 +55,7 @@ function Register() {
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data.message)
+        toast.error(error.response?.data.message);
       } else {
         toast.error("Something went wrong. Please try again.");
       }
@@ -64,37 +64,47 @@ function Register() {
       toast.info(data.message);
     },
   });
-   const registerSchema = z.object({
-    firstName: z.string().min(1, "First name is required."),
-    lastName: z.string().min(1, "Last name is required."),
-    username: z.string().min(1, "Username is required."),
-    email: z.string().email("Invalid email address."),
-    password: z.string().min(8, "Password must be at least 8 characters."),
-    confirmPassword: z.string().min(1, "Please confirm your password."),
-  }).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-  });
+  const registerSchema = z
+    .object({
+      firstName: z.string().min(1, "First name is required."),
+      lastName: z.string().min(1, "Last name is required."),
+      username: z.string().min(1, "Username is required."),
+      email: z.string().email("Invalid email address."),
+      password: z.string().min(8, "Password must be at least 8 characters."),
+      confirmPassword: z.string().min(1, "Please confirm your password."),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not match.",
+      path: ["confirmPassword"],
+    });
 
   function handleRegistration() {
-    const userData = { firstName, lastName, username, email, password, confirmPassword };
-     const result = registerSchema.safeParse(userData);
-     if (!result.success) {
-    const zodErrors: Record<string, string> = {};
-    const fieldErrors: Record<string, string[]> = result.error.flatten().fieldErrors;
+    const userData = {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      confirmPassword,
+    };
+    const result = registerSchema.safeParse(userData);
+    if (!result.success) {
+      const zodErrors: Record<string, string> = {};
+      const fieldErrors: Record<string, string[]> =
+        result.error.flatten().fieldErrors;
 
-    for (const key in fieldErrors) {
-      if (fieldErrors[key]?.[0]) {
-        zodErrors[key] = fieldErrors[key][0];
+      for (const key in fieldErrors) {
+        if (fieldErrors[key]?.[0]) {
+          zodErrors[key] = fieldErrors[key][0];
+        }
       }
-    }
 
-    setFormErrors(zodErrors);
-    return
-  }
-    setFormErrors({})
+      setFormErrors(zodErrors);
+      return;
+    }
+    setFormErrors({});
     const { confirmPassword: _, ...validUser } = result.data;
-    mutate(validUser)
+    mutate(validUser);
   }
   return (
     <Stack
@@ -308,7 +318,6 @@ function Register() {
             {formErrors.password && (
               <Typography color="error">{formErrors.password}</Typography>
             )}
-            
 
             <TextField
               label="Confirm Password"
@@ -347,8 +356,10 @@ function Register() {
               }}
             />
             {formErrors.confirmPassword && (
-                  <Typography color="error">{formErrors.confirmPassword}</Typography>
-                )}
+              <Typography color="error">
+                {formErrors.confirmPassword}
+              </Typography>
+            )}
             <Button
               variant="contained"
               onClick={handleRegistration}

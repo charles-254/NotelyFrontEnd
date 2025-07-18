@@ -10,29 +10,95 @@ import {
   FormControlLabel,
   Checkbox,
   Paper,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff, Email, Lock } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
+import axios from "axios";
+import z from "zod";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
+
+type UserCreds = {
+  identifier: string;
+  password: string;
+  rememberMe: boolean;
+};
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showForgotForm, setShowForgotForm] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
+  const loginSchema = z.object({
+    identifier: z.string().min(1, "Username OR Email is required."),
+    password: z.string().min(1, "Password is required."),
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["login-user"],
+    mutationFn: async (userCreds: UserCreds) => {
+      const response = await axiosInstance.post(
+        "http://127.0.0.1:3000/api/auth/login",
+        userCreds,
+      );
+      console.log(response.data);
+      return response.data;
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    },
+    onSuccess: () => {
+      //persist user infomation
+      toast.success("Authenticated successfully.");
+    },
+  });
+
+  function handleLogin() {
+    const userData = { identifier, password };
+    const result = loginSchema.safeParse(userData);
+    if (!result.success) {
+      const zodErrors: Record<string, string> = {};
+      const fieldErrors: Record<string, string[]> =
+        result.error.flatten().fieldErrors;
+
+      for (const key in fieldErrors) {
+        if (fieldErrors[key]?.[0]) {
+          zodErrors[key] = fieldErrors[key][0];
+        }
+      }
+
+      setFormErrors(zodErrors);
+      return;
+    }
+    setFormErrors({});
+    const validUserData = { ...result.data, rememberMe };
+    mutate(validUserData);
+  }
+
   const handleForgotSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.info("If your email is registered, a reset link has been sent.");
+    setFeedback("If your email is registered, a reset link has been sent.");
     // forgot password logic
     setTimeout(() => {
       setShowForgotForm(false);
-    }, 2000);
+    }, 4000);
   };
+
   return (
     <Stack
       justifyContent={"center"}
@@ -90,6 +156,8 @@ function Login() {
             </Typography>
             <TextField
               label="Email OR Username"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
               fullWidth
               variant="outlined"
               sx={inputStyles}
@@ -101,8 +169,13 @@ function Login() {
                 ),
               }}
             />
+            {formErrors.identifier && (
+              <Typography color="error">{formErrors.identifier}</Typography>
+            )}
             <TextField
               label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type={showPassword ? "text" : "password"}
               fullWidth
               variant="outlined"
@@ -123,6 +196,9 @@ function Login() {
                 ),
               }}
             />
+            {formErrors.password && (
+              <Typography color="error">{formErrors.password}</Typography>
+            )}
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -148,6 +224,8 @@ function Login() {
             </Stack>
             <Button
               variant="contained"
+              onClick={handleLogin}
+              loading={isPending}
               sx={{
                 borderRadius: 0,
                 fontSize: "1.3rem",
@@ -206,6 +284,7 @@ function Login() {
               bgcolor: "background.paper",
             }}
           >
+            {feedback && <Alert severity="info">{feedback}</Alert>}
             <Typography variant="h5" gutterBottom>
               Forgot Password
             </Typography>

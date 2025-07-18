@@ -11,7 +11,7 @@ const darkTheme = createTheme({
     },
     background: {
       default: "#000000",
-      paper: "#1e1e1e",
+      paper: "#121212",
     },
     text: {
       primary: "#e0e0e0",
@@ -32,7 +32,6 @@ const darkTheme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
           backgroundImage: "none",
           boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
         },

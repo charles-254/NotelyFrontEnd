@@ -7,6 +7,8 @@ import darkTheme from "./theme/darkMode";
 import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import DashboardPage from "./pages/DashboardPage";
+import Settings from "./pages/Settings";
 
 function App() {
   const client = new QueryClient();
@@ -35,6 +37,12 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/login" element={<Login />} />
+        </Routes>
+        <Routes>
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Routes>
+        <Routes>
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>
