@@ -271,6 +271,7 @@ function Login() {
           justifyContent="center"
           alignItems="center"
           zIndex={10}
+          onClick={() => setShowForgotForm(false)}
           sx={{
             bgcolor: "rgba(0, 0, 0, 0.7)",
             backdropFilter: "blur(6px)",
@@ -283,6 +284,7 @@ function Login() {
               maxWidth: 480,
               bgcolor: "background.paper",
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             {feedback && <Alert severity="info">{feedback}</Alert>}
             <Typography variant="h5" gutterBottom>

@@ -43,7 +43,7 @@ function Sidebar() {
 
   const navigate = useNavigate();
   return (
-    <div style={{ display: "flex" }}>
+    <Stack direction={"row"}>
       <Drawer
         variant="permanent"
         open={open}
@@ -71,7 +71,7 @@ function Sidebar() {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Stack component={"img"} src="logo.png" width={"2.5rem"} />
+              <Stack component={"img"} src="/logo.png" width={"2.5rem"} />
               <Typography
                 fontSize={"1.1rem"}
                 fontWeight={700}
@@ -108,7 +108,7 @@ function Sidebar() {
               >
                 <Stack
                   component="img"
-                  src="logo.png"
+                  src="/logo.png"
                   width="2.5rem"
                   className="logo-img"
                   sx={{
@@ -152,7 +152,7 @@ function Sidebar() {
             component="nav"
           >
             {open ? (
-              <ListItemButton onClick={() => navigate("/dashboard")}>
+              <ListItemButton onClick={() => navigate("/home")}>
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <HomeIcon />
                 </ListItemIcon>
@@ -165,7 +165,7 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/dashboard")}>
+                <ListItemButton onClick={() => navigate("/home")}>
                   <ListItemIcon>
                     <HomeIcon style={{ fontSize: "1.5rem" }} />
                   </ListItemIcon>
@@ -265,7 +265,7 @@ function Sidebar() {
             )}
 
             {open ? (
-              <ListItemButton onClick={() => navigate("/trash")}>
+              <ListItemButton onClick={() => navigate("entries/trash")}>
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaTrash />
                 </ListItemIcon>
@@ -278,7 +278,7 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/trash")}>
+                <ListItemButton onClick={() => navigate("entries/trash")}>
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaTrash style={{ fontSize: "1.1rem" }} />
                   </ListItemIcon>
@@ -396,10 +396,15 @@ function Sidebar() {
               <ListItemButton onClick={() => navigate("/settings/account")}>
                 <ListItemText primary="Account & security" />
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => navigate("/settings/appearance-theme")}
+              >
                 <ListItemText primary="Appearance & Theme" />
               </ListItemButton>
-              <ListItemButton sx={{ mb: "1rem" }}>
+              <ListItemButton
+                sx={{ mb: "1rem" }}
+                onClick={() => navigate("/settings/sync-backup")}
+              >
                 <ListItemText primary="Sync & Backup" />
               </ListItemButton>
 
@@ -409,11 +414,17 @@ function Sidebar() {
               >
                 Experimental
               </Typography>
-              <ListItemButton sx={{ mt: "1rem" }}>
+              <ListItemButton
+                sx={{ mt: "1rem" }}
+                onClick={() => navigate("/settings/beta-tester")}
+              >
                 <ListItemText primary="Be a beta tester" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
-              <ListItemButton sx={{ mb: "1rem" }}>
+              <ListItemButton
+                sx={{ mb: "1rem" }}
+                onClick={() => navigate("/settings/whats-new")}
+              >
                 <ListItemText primary="What's new" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
@@ -424,11 +435,17 @@ function Sidebar() {
                 Support
               </Typography>
 
-              <ListItemButton sx={{ mt: "1rem" }}>
+              <ListItemButton
+                sx={{ mt: "1rem" }}
+                onClick={() => navigate("/settings/help-center")}
+              >
                 <ListItemText primary="Help center" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
-              <ListItemButton sx={{ mb: "1rem" }}>
+              <ListItemButton
+                sx={{ mb: "1rem" }}
+                onClick={() => navigate("/settings/reports-violations")}
+              >
                 <ListItemText primary="Reports & Violations Center" />
               </ListItemButton>
               <Typography
@@ -438,15 +455,13 @@ function Sidebar() {
                 Privacy
               </Typography>
 
-              <ListItemButton>
-                <ListItemText primary="Personalized Ads" />
-                <IoOpenOutline fontSize="1.3rem" />
-              </ListItemButton>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => navigate("/settings/privacy-policy")}
+              >
                 <ListItemText primary="Privacy policy" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate("/settings/terms")}>
                 <ListItemText primary="Terms of service" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
@@ -454,7 +469,7 @@ function Sidebar() {
           </Drawer>
         </Stack>
       </Drawer>
-    </div>
+    </Stack>
   );
 }
 

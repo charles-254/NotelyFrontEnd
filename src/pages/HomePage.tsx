@@ -1,11 +1,9 @@
-import HeroSection from "../components/HeroSection";
-import HomeBodySection from "../components/HomeBodySection";
+import Home from "../components/Home";
 
 function HomePage() {
   return (
     <>
-      <HeroSection />
-      <HomeBodySection />
+      <Home />
     </>
   );
 }

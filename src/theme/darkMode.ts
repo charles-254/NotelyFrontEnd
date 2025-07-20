@@ -24,7 +24,7 @@ const darkTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "10px",
+          borderRadius: ".5rem",
           textTransform: "capitalize",
         },
       },

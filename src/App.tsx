@@ -4,12 +4,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import darkTheme from "./theme/darkMode";
-import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import DashboardPage from "./pages/DashboardPage";
+import HomePage from "./pages/HomePage";
 import Settings from "./pages/Settings";
 import AccountSecurityPage from "./pages/AccountSecurityPage";
+import AppearanceAndTheme from "./pages/AppeareanceAndTheme";
+import SyncBackup from "./pages/SyncBackup";
+import HelpCenter from "./pages/HelpCenter";
+import BetaTester from "./pages/BetaTester";
+import WhatsNew from "./pages/WhatsNew";
+import ReportsAndViolationsCenter from "./pages/ReportsAndViolationsCenter";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfServicePage from "./pages/TermsOfService";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   const client = new QueryClient();
@@ -31,22 +40,27 @@ function App() {
           transition={Bounce}
         />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-        <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
-        </Routes>
-        <Routes>
           <Route path="/login" element={<Login />} />
-        </Routes>
-        <Routes>
-          <Route path="/dashboard" element={<DashboardPage />} />
-        </Routes>
-        <Routes>
+          <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<Settings />} />
-        </Routes>
-        <Routes>
           <Route path="/settings/account" element={<AccountSecurityPage />} />
+          <Route
+            path="/settings/appearance-theme"
+            element={<AppearanceAndTheme />}
+          />
+          <Route path="/settings/sync-backup" element={<SyncBackup />} />
+          <Route path="/settings/help-center" element={<HelpCenter />} />
+          <Route path="/settings/beta-tester" element={<BetaTester />} />
+          <Route path="/settings/whats-new" element={<WhatsNew />} />
+          <Route
+            path="/settings/reports-violations"
+            element={<ReportsAndViolationsCenter />}
+          />
+          <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/settings/terms" element={<TermsOfServicePage />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

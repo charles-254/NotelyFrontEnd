@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import Sidebar from "./Sidebar";
 
-function Dashboard() {
+function Home() {
   return (
     <Stack direction={"row"}>
       <Sidebar />
@@ -12,4 +12,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Home;
