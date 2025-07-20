@@ -161,6 +161,11 @@ function Login() {
               fullWidth
               variant="outlined"
               sx={inputStyles}
+              error={!!formErrors.identifier}
+              helperText={formErrors.identifier}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -169,9 +174,7 @@ function Login() {
                 ),
               }}
             />
-            {formErrors.identifier && (
-              <Typography color="error">{formErrors.identifier}</Typography>
-            )}
+
             <TextField
               label="Password"
               value={password}
@@ -180,7 +183,12 @@ function Login() {
               fullWidth
               variant="outlined"
               autoComplete="current-password"
+              error={!!formErrors.password}
+              helperText={formErrors.password}
               sx={inputStyles}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -196,9 +204,7 @@ function Login() {
                 ),
               }}
             />
-            {formErrors.password && (
-              <Typography color="error">{formErrors.password}</Typography>
-            )}
+
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -308,16 +314,12 @@ function Login() {
                 <Button
                   onClick={() => setShowForgotForm(false)}
                   variant="outlined"
+                  color="secondary"
                   fullWidth
                 >
                   Cancel
                 </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  fullWidth
-                >
+                <Button type="submit" variant="contained" fullWidth>
                   Send Link
                 </Button>
               </Stack>

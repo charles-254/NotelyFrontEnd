@@ -46,10 +46,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/settings/account" element={<AccountSecurityPage />} />
-          <Route
-            path="/settings/appearance-theme"
-            element={<AppearanceAndTheme />}
-          />
+          <Route path="/settings/appearance" element={<AppearanceAndTheme />} />
           <Route path="/settings/sync-backup" element={<SyncBackup />} />
           <Route path="/settings/help-center" element={<HelpCenter />} />
           <Route path="/settings/beta-tester" element={<BetaTester />} />

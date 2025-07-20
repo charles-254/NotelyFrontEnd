@@ -169,6 +169,11 @@ function Register() {
                   onChange={(e) => setFirstName(e.target.value)}
                   fullWidth
                   variant="outlined"
+                  error={!!formErrors.firstName}
+                  helperText={formErrors.firstName}
+                  FormHelperTextProps={{
+                    sx: { fontSize: "1rem" },
+                  }}
                   sx={{
                     ...inputStyles,
                     "& input:-webkit-autofill": {
@@ -187,9 +192,6 @@ function Register() {
                     ),
                   }}
                 />
-                {formErrors.firstName && (
-                  <Typography color="error">{formErrors.firstName}</Typography>
-                )}
               </Box>
               <Box maxWidth={"50%"}>
                 <TextField
@@ -198,6 +200,11 @@ function Register() {
                   onChange={(e) => setLastName(e.target.value)}
                   fullWidth
                   variant="outlined"
+                  error={!!formErrors.lastName}
+                  helperText={formErrors.lastName}
+                  FormHelperTextProps={{
+                    sx: { fontSize: "1rem" },
+                  }}
                   sx={{
                     ...inputStyles,
                     "& input:-webkit-autofill": {
@@ -216,9 +223,6 @@ function Register() {
                     ),
                   }}
                 />
-                {formErrors.lastName && (
-                  <Typography color="error">{formErrors.lastName}</Typography>
-                )}
               </Box>
             </Stack>
 
@@ -228,6 +232,11 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
               fullWidth
               variant="outlined"
+              error={!!formErrors.username}
+              helperText={formErrors.username}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               sx={{
                 ...inputStyles,
                 "& input:-webkit-autofill": {
@@ -246,9 +255,6 @@ function Register() {
                 ),
               }}
             />
-            {formErrors.username && (
-              <Typography color="error">{formErrors.username}</Typography>
-            )}
 
             <TextField
               label="Email"
@@ -256,6 +262,11 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
               variant="outlined"
+              error={!!formErrors.email}
+              helperText={formErrors.email}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               sx={{
                 ...inputStyles,
                 "& input:-webkit-autofill": {
@@ -274,9 +285,6 @@ function Register() {
                 ),
               }}
             />
-            {formErrors.email && (
-              <Typography color="error">{formErrors.email}</Typography>
-            )}
 
             <TextField
               label="Password"
@@ -286,6 +294,11 @@ function Register() {
               fullWidth
               variant="outlined"
               autoComplete="new-password"
+              error={!!formErrors.password}
+              helperText={formErrors.password}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               sx={{
                 ...inputStyles,
                 "& input:-webkit-autofill": {
@@ -314,9 +327,6 @@ function Register() {
                 ),
               }}
             />
-            {formErrors.password && (
-              <Typography color="error">{formErrors.password}</Typography>
-            )}
 
             <TextField
               label="Confirm Password"
@@ -326,6 +336,11 @@ function Register() {
               fullWidth
               variant="outlined"
               autoComplete="new-password"
+              error={!!formErrors.confirmPassword}
+              helperText={formErrors.confirmPassword}
+              FormHelperTextProps={{
+                sx: { fontSize: "1rem" },
+              }}
               sx={{
                 ...inputStyles,
                 "& input:-webkit-autofill": {
@@ -354,11 +369,7 @@ function Register() {
                 ),
               }}
             />
-            {formErrors.confirmPassword && (
-              <Typography color="error">
-                {formErrors.confirmPassword}
-              </Typography>
-            )}
+
             <Button
               variant="contained"
               onClick={handleRegistration}

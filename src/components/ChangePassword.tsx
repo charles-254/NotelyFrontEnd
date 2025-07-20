@@ -16,10 +16,10 @@ interface ChangePasswordModalProps {
   open: boolean;
   onClose: () => void;
 }
-interface PasswordUpdate {
-  currentPassword: string;
-  newpassword: string;
-}
+// interface PasswordUpdate {
+//   currentPassword: string;
+//   newpassword: string;
+// }
 
 const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,7 +62,6 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
         }
       }
       setFormErrors(zodErrors);
-      console.log(zodErrors);
       return;
     }
 
@@ -111,6 +110,12 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             fullWidth
+            error={!!formErrors.currentPassword}
+            helperText={formErrors.currentPassword}
+            sx={inputStyles}
+            FormHelperTextProps={{
+              sx: { fontSize: "1rem" },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -121,9 +126,7 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
               ),
             }}
           />
-          {formErrors.currentPassword && (
-            <Typography color="error">{formErrors.currentPassword}</Typography>
-          )}
+
           <TextField
             required
             type={showNewPassword ? "text" : "password"}
@@ -131,6 +134,12 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             fullWidth
+            sx={inputStyles}
+            error={!!formErrors.newPassword}
+            helperText={formErrors.newPassword}
+            FormHelperTextProps={{
+              sx: { fontSize: "1rem" },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -141,9 +150,7 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
               ),
             }}
           />
-          {formErrors.newPassword && (
-            <Typography color="error">{formErrors.newPassword}</Typography>
-          )}
+
           <TextField
             required
             type={showConfirmNewPassword ? "text" : "password"}
@@ -151,6 +158,12 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
             fullWidth
+            error={!!formErrors.confirmNewPassword}
+            helperText={formErrors.confirmNewPassword}
+            sx={inputStyles}
+            FormHelperTextProps={{
+              sx: { fontSize: "1rem" },
+            }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -165,11 +178,7 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
               ),
             }}
           />
-          {formErrors.confirmNewPassword && (
-            <Typography color="error">
-              {formErrors.confirmNewPassword}
-            </Typography>
-          )}
+
           <Button variant="contained" onClick={handleChangePassword}>
             Update Password
           </Button>
@@ -180,3 +189,16 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
 };
 
 export default ChangePassword;
+
+const inputStyles = {
+  backgroundColor: "transparent",
+  borderRadius: 2,
+  "& .MuiOutlinedInput-root": {
+    "&:hover fieldset": {
+      borderColor: "primary.main",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "primary.main",
+    },
+  },
+};

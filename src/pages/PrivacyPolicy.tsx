@@ -44,25 +44,25 @@ function PrivacyPolicy() {
 
             <List dense>
               <ListItem>
-                <ListItemText primary="✔️ Right to be informed about how your data is collected and used" />
+                <ListItemText primary="• Right to be informed about how your data is collected and used" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to access your personal data" />
+                <ListItemText primary="• Right to access your personal data" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to correct inaccurate or incomplete data" />
+                <ListItemText primary="• Right to correct inaccurate or incomplete data" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to request deletion of your data ('right to be forgotten')" />
+                <ListItemText primary="• Right to request deletion of your data ('right to be forgotten')" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to restrict or object to processing" />
+                <ListItemText primary="• Right to restrict or object to processing" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to data portability" />
+                <ListItemText primary="• Right to data portability" />
               </ListItem>
               <ListItem>
-                <ListItemText primary="✔️ Right to withdraw consent at any time" />
+                <ListItemText primary="• Right to withdraw consent at any time" />
               </ListItem>
             </List>
           </CardContent>

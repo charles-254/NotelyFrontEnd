@@ -13,9 +13,9 @@ import {
   Avatar,
   Box,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import Logout from "./Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import { FaPowerOff } from "react-icons/fa6";
@@ -28,18 +28,24 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { IoOpenOutline } from "react-icons/io5";
+import { MdContactSupport } from "react-icons/md";
 
 const drawerWidth = 160;
 
 function Sidebar() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showLogoutComp, setShowLogoutComp] = useState(false);
   const [open, setOpen] = useState(() => {
     const saved = localStorage.getItem("sidebarOpen");
     return saved === null ? true : JSON.parse(saved);
   });
+
   useEffect(() => {
     localStorage.setItem("sidebarOpen", JSON.stringify(open));
   }, [open]);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const navigate = useNavigate();
   return (
@@ -152,7 +158,10 @@ function Sidebar() {
             component="nav"
           >
             {open ? (
-              <ListItemButton onClick={() => navigate("/home")}>
+              <ListItemButton
+                selected={currentPath === "/home"}
+                onClick={() => navigate("/home")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <HomeIcon />
                 </ListItemIcon>
@@ -165,7 +174,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/home")}>
+                <ListItemButton
+                  selected={currentPath === "/home"}
+                  onClick={() => navigate("/home")}
+                >
                   <ListItemIcon>
                     <HomeIcon style={{ fontSize: "1.5rem" }} />
                   </ListItemIcon>
@@ -174,7 +186,10 @@ function Sidebar() {
             )}
 
             {open ? (
-              <ListItemButton onClick={() => navigate("/profile")}>
+              <ListItemButton
+                selected={currentPath === "/profile"}
+                onClick={() => navigate("/profile")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaUser />
                 </ListItemIcon>
@@ -187,7 +202,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/profile")}>
+                <ListItemButton
+                  selected={currentPath === "/profile"}
+                  onClick={() => navigate("/profile")}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaUser style={{ fontSize: "1.3rem" }} />
                   </ListItemIcon>
@@ -196,7 +214,10 @@ function Sidebar() {
             )}
 
             {open ? (
-              <ListItemButton onClick={() => navigate("/entries/create")}>
+              <ListItemButton
+                selected={currentPath === "/entries/create"}
+                onClick={() => navigate("/entries/create")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaPlus />
                 </ListItemIcon>
@@ -209,7 +230,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/entries/create")}>
+                <ListItemButton
+                  selected={currentPath === "/entries/create"}
+                  onClick={() => navigate("/entries/create")}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaPlus style={{ fontSize: "1.3rem" }} />
                   </ListItemIcon>
@@ -218,7 +242,10 @@ function Sidebar() {
             )}
 
             {open ? (
-              <ListItemButton onClick={() => navigate("/analytics")}>
+              <ListItemButton
+                selected={currentPath === "/analytics"}
+                onClick={() => navigate("/analytics")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaArrowTrendUp />
                 </ListItemIcon>
@@ -231,7 +258,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/analytics")}>
+                <ListItemButton
+                  selected={currentPath === "/analytics"}
+                  onClick={() => navigate("/analytics")}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaArrowTrendUp style={{ fontSize: "1.3rem" }} />
                   </ListItemIcon>
@@ -239,7 +269,10 @@ function Sidebar() {
               </Tooltip>
             )}
             {open ? (
-              <ListItemButton onClick={() => navigate("/updates")}>
+              <ListItemButton
+                selected={currentPath === "/updates"}
+                onClick={() => navigate("/updates")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <Badge color="error" variant="dot">
                     <IoNotifications />
@@ -254,7 +287,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("/updates")}>
+                <ListItemButton
+                  selected={currentPath === "/updates"}
+                  onClick={() => navigate("/updates")}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <Badge badgeContent={4} max={99} color="error">
                       <IoNotifications style={{ fontSize: "1.3rem" }} />
@@ -265,7 +301,10 @@ function Sidebar() {
             )}
 
             {open ? (
-              <ListItemButton onClick={() => navigate("entries/trash")}>
+              <ListItemButton
+                selected={currentPath === "/trash"}
+                onClick={() => navigate("/trash")}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaTrash />
                 </ListItemIcon>
@@ -278,7 +317,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => navigate("entries/trash")}>
+                <ListItemButton
+                  selected={currentPath === "/trash"}
+                  onClick={() => navigate("/trash")}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaTrash style={{ fontSize: "1.1rem" }} />
                   </ListItemIcon>
@@ -292,7 +334,38 @@ function Sidebar() {
             component="nav"
           >
             {open ? (
-              <ListItemButton onClick={() => setSettingsOpen(true)}>
+              <ListItemButton
+                selected={currentPath === "/contact-us"}
+                onClick={() => navigate("/contact-us")}
+              >
+                <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
+                  <MdContactSupport style={{ fontSize: "1.3rem" }} />
+                </ListItemIcon>
+                <ListItemText primary="Contact Us" />
+              </ListItemButton>
+            ) : (
+              <Tooltip
+                title="Contact Us"
+                placement="right"
+                componentsProps={styling}
+                sx={{ mb: ".5rem" }}
+              >
+                <ListItemButton
+                  selected={currentPath === "/contact-us"}
+                  onClick={() => navigate("/contact-us")}
+                >
+                  <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
+                    <MdContactSupport style={{ fontSize: "1.5rem" }} />
+                  </ListItemIcon>
+                </ListItemButton>
+              </Tooltip>
+            )}
+
+            {open ? (
+              <ListItemButton
+                selected={currentPath.startsWith("/settings")}
+                onClick={() => setSettingsOpen(true)}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <SettingsIcon />
                 </ListItemIcon>
@@ -305,7 +378,10 @@ function Sidebar() {
                 componentsProps={styling}
                 sx={{ mb: ".5rem" }}
               >
-                <ListItemButton onClick={() => setSettingsOpen(true)}>
+                <ListItemButton
+                  selected={currentPath.startsWith("/settings")}
+                  onClick={() => setSettingsOpen(true)}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <SettingsIcon style={{ fontSize: "1.5rem" }} />
                   </ListItemIcon>
@@ -313,7 +389,9 @@ function Sidebar() {
               </Tooltip>
             )}
             {open ? (
-              <ListItemButton onClick={() => navigate("/logout")}>
+              <ListItemButton
+                onClick={() => setShowLogoutComp(!showLogoutComp)}
+              >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaPowerOff style={{ color: "red" }} />
                 </ListItemIcon>
@@ -325,7 +403,9 @@ function Sidebar() {
                 placement="right"
                 componentsProps={styling}
               >
-                <ListItemButton onClick={() => navigate("/logout")}>
+                <ListItemButton
+                  onClick={() => setShowLogoutComp(!showLogoutComp)}
+                >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaPowerOff style={{ color: "red", fontSize: "1.3rem" }} />
                   </ListItemIcon>
@@ -340,14 +420,17 @@ function Sidebar() {
               alignItems={"center"}
               gap={".2rem"}
             >
-              <Avatar
-                alt="FirstName.lastName Intials"
-                src="/static/images/avatar/1.jpg"
-                sx={{ bgcolor: "orangered" }}
-              />
+              <a href="/profile">
+                <Avatar
+                  alt="FirstName.lastName Intials"
+                  src="/static/images/avatar/1.jpg"
+                  sx={{ bgcolor: "orangered" }}
+                />
+              </a>
               {open && <Typography>Username</Typography>}
             </Stack>
           </List>
+
           <Drawer
             anchor="left"
             open={settingsOpen}
@@ -390,19 +473,27 @@ function Sidebar() {
               >
                 General
               </Typography>
-              <ListItemButton onClick={() => navigate("/settings")}>
+              <ListItemButton
+                selected={currentPath === "/settings"}
+                onClick={() => navigate("/settings")}
+              >
                 <ListItemText primary="Settings" />
               </ListItemButton>
-              <ListItemButton onClick={() => navigate("/settings/account")}>
+              <ListItemButton
+                selected={currentPath === "/settings/account"}
+                onClick={() => navigate("/settings/account")}
+              >
                 <ListItemText primary="Account & security" />
               </ListItemButton>
               <ListItemButton
-                onClick={() => navigate("/settings/appearance-theme")}
+                selected={currentPath === "/settings/appearance"}
+                onClick={() => navigate("/settings/appearance")}
               >
                 <ListItemText primary="Appearance & Theme" />
               </ListItemButton>
               <ListItemButton
                 sx={{ mb: "1rem" }}
+                selected={currentPath === "/settings/sync-backup"}
                 onClick={() => navigate("/settings/sync-backup")}
               >
                 <ListItemText primary="Sync & Backup" />
@@ -416,6 +507,7 @@ function Sidebar() {
               </Typography>
               <ListItemButton
                 sx={{ mt: "1rem" }}
+                selected={currentPath === "/settings/beta-tester"}
                 onClick={() => navigate("/settings/beta-tester")}
               >
                 <ListItemText primary="Be a beta tester" />
@@ -423,6 +515,7 @@ function Sidebar() {
               </ListItemButton>
               <ListItemButton
                 sx={{ mb: "1rem" }}
+                selected={currentPath === "/settings/whats-new"}
                 onClick={() => navigate("/settings/whats-new")}
               >
                 <ListItemText primary="What's new" />
@@ -437,6 +530,7 @@ function Sidebar() {
 
               <ListItemButton
                 sx={{ mt: "1rem" }}
+                selected={currentPath === "/settings/help-center"}
                 onClick={() => navigate("/settings/help-center")}
               >
                 <ListItemText primary="Help center" />
@@ -444,6 +538,7 @@ function Sidebar() {
               </ListItemButton>
               <ListItemButton
                 sx={{ mb: "1rem" }}
+                selected={currentPath === "/settings/reports-violations"}
                 onClick={() => navigate("/settings/reports-violations")}
               >
                 <ListItemText primary="Reports & Violations Center" />
@@ -456,12 +551,16 @@ function Sidebar() {
               </Typography>
 
               <ListItemButton
+                selected={currentPath === "/settings/privacy-policy"}
                 onClick={() => navigate("/settings/privacy-policy")}
               >
                 <ListItemText primary="Privacy policy" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
-              <ListItemButton onClick={() => navigate("/settings/terms")}>
+              <ListItemButton
+                selected={currentPath === "/settings/terms"}
+                onClick={() => navigate("/settings/terms")}
+              >
                 <ListItemText primary="Terms of service" />
                 <IoOpenOutline fontSize="1.3rem" />
               </ListItemButton>
@@ -469,6 +568,12 @@ function Sidebar() {
           </Drawer>
         </Stack>
       </Drawer>
+      {showLogoutComp && (
+        <Logout
+          open={showLogoutComp}
+          onClose={() => setShowLogoutComp(false)}
+        />
+      )}
     </Stack>
   );
 }

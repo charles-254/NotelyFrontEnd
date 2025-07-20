@@ -19,6 +19,7 @@ import ChangePassword from "../components/ChangePassword";
 import DeleteAccount from "../components/DeleteAccount";
 import DeleteProfileImage from "../components/DeleteProfileImage";
 import UploadProfileImage from "../components/UploadProfileImage";
+import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { Person, Email } from "@mui/icons-material";
 import { toast } from "react-toastify";
@@ -103,264 +104,421 @@ function SettingsPage() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mb: "6rem", mt: "4rem" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
-        <Tabs value={tab} onChange={(_e, newValue) => setTab(newValue)}>
-          <Tab label="User Settings" />
-          <Tab label="Security Settings" />
-        </Tabs>
-      </Box>
+    <Stack direction={"row"}>
+      <Sidebar />
+      <Container maxWidth="md" sx={{ mb: "6rem", mt: "4rem" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
+          <Tabs value={tab} onChange={(_e, newValue) => setTab(newValue)}>
+            <Tab label="User Settings" />
+            <Tab label="Security Settings" />
+          </Tabs>
+        </Box>
 
-      <TabPanel value={tab} index={0}>
-        <Typography variant="h5" gutterBottom fontWeight={700}>
-          User Settings
-        </Typography>
-        <Typography color="text.secondary" mb={2}>
-          Manage your personal information and profile details.
-        </Typography>
+        <TabPanel value={tab} index={0}>
+          <Typography variant="h5" gutterBottom fontWeight={700}>
+            User Settings
+          </Typography>
+          <Typography color="text.secondary" mb={2}>
+            Manage your personal information and profile details.
+          </Typography>
 
-        <Divider sx={{ my: "2rem" }} />
-        <Card sx={{ mb: 3 }}>
-          <CardContent>
-            <Stack direction="row" spacing={3} alignItems="center">
-              <Avatar
-                src="/avatar.png"
-                alt="User Avatar"
-                sx={{ width: "7rem", height: "7rem" }}
-              />
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                width={"100%"}
-              >
-                <Box>
-                  <Typography variant="subtitle1">
-                    Upload your profile image
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    We support .png, .jpg, .jpeg.
-                  </Typography>
-                </Box>
-                <Stack direction="row" spacing={1} mt={1}>
-                  <Button
-                    variant="outlined"
-                    sx={{ borderRadius: ".3rem" }}
-                    endIcon={<IoCloudUploadOutline />}
-                    onClick={() => setShowUploadProfileImageComp(true)}
-                  >
-                    Upload Image
-                  </Button>
-                  <Button
-                    variant="contained"
-                    endIcon={<FaRegTrashAlt />}
-                    onClick={() => setShowDeleteProfileImageComp(true)}
-                    sx={{
-                      bgcolor: "#c20000",
-                      color: "#d1d0d0",
-                      borderRadius: ".3rem",
-                      "&:hover ": {
-                        bgcolor: "#e00202",
-                      },
-                    }}
-                  >
-                    Delete Image
-                  </Button>
+          <Divider sx={{ my: "2rem" }} />
+          <Card sx={{ mb: 3 }}>
+            <CardContent>
+              <Stack direction="row" spacing={3} alignItems="center">
+                <Avatar
+                  src="/avatar.png"
+                  alt="User Avatar"
+                  sx={{ width: "7rem", height: "7rem" }}
+                />
+                <Stack
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                  width={"100%"}
+                >
+                  <Box>
+                    <Typography variant="subtitle1">
+                      Upload your profile image
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      We support .png, .jpg, .jpeg.
+                    </Typography>
+                  </Box>
+                  <Stack direction="row" spacing={1} mt={1}>
+                    <Button
+                      variant="outlined"
+                      sx={{ borderRadius: ".3rem" }}
+                      endIcon={<IoCloudUploadOutline />}
+                      onClick={() => setShowUploadProfileImageComp(true)}
+                    >
+                      Upload Image
+                    </Button>
+                    <Button
+                      variant="contained"
+                      endIcon={<FaRegTrashAlt />}
+                      onClick={() => setShowDeleteProfileImageComp(true)}
+                      sx={{
+                        bgcolor: "#c20000",
+                        color: "#d1d0d0",
+                        borderRadius: ".3rem",
+                        "&:hover ": {
+                          bgcolor: "#e00202",
+                        },
+                      }}
+                    >
+                      Delete Image
+                    </Button>
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        <Stack
-          spacing={2}
-          border={"1px solid rgb(47, 47, 47)"}
-          p={"2rem"}
-          borderRadius={".5rem"}
-        >
-          <Box display={"flex"} gap={"2rem"}>
-            <Box width={"100%"}>
-              <InputLabel sx={{ mb: ".5rem" }}>First Name</InputLabel>
-              <TextField
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                fullWidth
-                variant="outlined"
-                sx={inputStyles}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Person />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-            <Box width={"100%"}>
-              <InputLabel sx={{ mb: ".5rem" }}>Last Name</InputLabel>
-              <TextField
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                fullWidth
-                variant="outlined"
-                sx={inputStyles}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Person />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
-          </Box>
-          <Box>
-            <InputLabel sx={{ mb: ".3rem" }}>Username</InputLabel>
-            <TextField
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Person />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          <Box>
-            <InputLabel sx={{ mb: ".5rem" }}>Email</InputLabel>
-            <TextField
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={inputStyles}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Email />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-          <Button
-            variant="outlined"
-            size="large"
-            disabled={!isChanged}
-            onClick={handleUpdateUserDetails}
-            sx={{ width: "fit-content", borderRadius: ".3rem", py: ".7rem" }}
+          <Stack
+            spacing={2}
+            border={"1px solid rgb(47, 47, 47)"}
+            p={"2rem"}
+            borderRadius={".5rem"}
           >
-            Save Changes
-          </Button>
-        </Stack>
-      </TabPanel>
-
-      <TabPanel value={tab} index={1}>
-        <Stack>
-          <Typography variant="h5" gutterBottom fontWeight={700}>
-            Security Settings
-          </Typography>
-          <Typography color="text.secondary" mb={"1.5rem"}>
-            Set up multi-factor authentication and add third-party logins like
-            GitHub or Google.
-          </Typography>
-
-          <Divider />
-          <Stack component={"section"} mt={"2.5rem"}>
-            <Typography variant="h5">Password And Authentication</Typography>
-            <Typography color="text.secondary">
-              Secure your account with password and two-factor authentication.
-            </Typography>
-            <Stack
-              mt={"1.5rem"}
-              spacing={2}
-              border={"1px solid rgb(47, 47, 47)"}
-              p={"1rem"}
-              borderRadius={".5rem"}
-            >
-              <Paper
-                sx={{
-                  display: "flex",
-                  px: ".7rem",
-                  py: "1.2rem",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
-                  <BsKeyFill style={{ fontSize: "2rem" }} />
-
-                  <Stack>
-                    <Typography variant="subtitle1">
-                      Account password
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Keep your account protected with frequent password
-                      updates.
-                    </Typography>
-                  </Stack>
-                </Stack>
-                <Button
+            <Box display={"flex"} gap={"2rem"}>
+              <Box width={"100%"}>
+                <InputLabel sx={{ mb: ".5rem" }}>First Name</InputLabel>
+                <TextField
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  fullWidth
                   variant="outlined"
-                  color="secondary"
-                  size="large"
-                  sx={{ borderRadius: ".3rem", my: ".5rem" }}
-                  onClick={() => setShowPasswordComp(true)}
-                >
-                  Change Password
-                </Button>
-              </Paper>
-              <Paper
-                sx={{
-                  display: "flex",
-                  px: ".7rem",
-                  py: "1.2rem",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  sx={inputStyles}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Person />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box width={"100%"}>
+                <InputLabel sx={{ mb: ".5rem" }}>Last Name</InputLabel>
+                <TextField
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  fullWidth
+                  variant="outlined"
+                  sx={inputStyles}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Person />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+            </Box>
+            <Box>
+              <InputLabel sx={{ mb: ".3rem" }}>Username</InputLabel>
+              <TextField
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                fullWidth
+                variant="outlined"
+                sx={inputStyles}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person />
+                    </InputAdornment>
+                  ),
                 }}
+              />
+            </Box>
+            <Box>
+              <InputLabel sx={{ mb: ".5rem" }}>Email</InputLabel>
+              <TextField
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+                variant="outlined"
+                sx={inputStyles}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+            <Button
+              variant="outlined"
+              size="large"
+              disabled={!isChanged}
+              onClick={handleUpdateUserDetails}
+              sx={{ width: "fit-content", borderRadius: ".3rem", py: ".7rem" }}
+            >
+              Save Changes
+            </Button>
+          </Stack>
+        </TabPanel>
+
+        <TabPanel value={tab} index={1}>
+          <Stack>
+            <Typography variant="h5" gutterBottom fontWeight={700}>
+              Security Settings
+            </Typography>
+            <Typography color="text.secondary" mb={"1.5rem"}>
+              Set up multi-factor authentication and add third-party logins like
+              GitHub or Google.
+            </Typography>
+
+            <Divider />
+            <Stack component={"section"} mt={"2.5rem"}>
+              <Typography variant="h5">Password And Authentication</Typography>
+              <Typography color="text.secondary">
+                Secure your account with password and two-factor authentication.
+              </Typography>
+              <Stack
+                mt={"1.5rem"}
+                spacing={2}
+                border={"1px solid rgb(47, 47, 47)"}
+                p={"1rem"}
+                borderRadius={".5rem"}
               >
-                <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
-                  <IoShieldHalfOutline style={{ fontSize: "2rem" }} />
-                  <Stack>
-                    <Stack direction={"row"} gap={".5rem"}>
-                      <Typography variant="subtitle1" sx={{ display: "flex" }}>
-                        Two-Factor Authentication
+                <Paper
+                  sx={{
+                    display: "flex",
+                    px: ".7rem",
+                    py: "1.2rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
+                    <BsKeyFill style={{ fontSize: "2rem" }} />
+
+                    <Stack>
+                      <Typography variant="subtitle1">
+                        Account password
                       </Typography>
-                      {twoFAEnabled ? (
-                        <Stack direction={"row"} alignItems={"center"}>
-                          <LuDot
-                            style={{ fontSize: "2rem", color: "#16d085" }}
-                          />
-                          <Typography
-                            variant="subtitle1"
-                            color="primary.main"
-                            fontWeight={600}
-                          >
-                            2FA is Active
-                          </Typography>
-                        </Stack>
-                      ) : (
-                        <Stack direction={"row"} alignItems={"center"}>
-                          <LuDot style={{ fontSize: "2rem", color: "red" }} />
-                          <Typography color="error" fontWeight={700}>
-                            2FA is Inactive
-                          </Typography>
-                        </Stack>
-                      )}
+                      <Typography variant="body2" color="text.secondary">
+                        Keep your account protected with frequent password
+                        updates.
+                      </Typography>
                     </Stack>
-                    <Typography variant="body2" color="text.secondary">
-                      Two-Factor Authentication adds protection to your account.
+                  </Stack>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    size="large"
+                    sx={{ borderRadius: ".3rem", my: ".5rem" }}
+                    onClick={() => setShowPasswordComp(true)}
+                  >
+                    Change Password
+                  </Button>
+                </Paper>
+                <Paper
+                  sx={{
+                    display: "flex",
+                    px: ".7rem",
+                    py: "1.2rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
+                    <IoShieldHalfOutline style={{ fontSize: "2rem" }} />
+                    <Stack>
+                      <Stack direction={"row"} gap={".5rem"}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ display: "flex" }}
+                        >
+                          Two-Factor Authentication
+                        </Typography>
+                        {twoFAEnabled ? (
+                          <Stack direction={"row"} alignItems={"center"}>
+                            <LuDot
+                              style={{ fontSize: "2rem", color: "#16d085" }}
+                            />
+                            <Typography
+                              variant="subtitle1"
+                              color="primary.main"
+                              fontWeight={600}
+                            >
+                              2FA is Active
+                            </Typography>
+                          </Stack>
+                        ) : (
+                          <Stack direction={"row"} alignItems={"center"}>
+                            <LuDot style={{ fontSize: "2rem", color: "red" }} />
+                            <Typography color="error" fontWeight={700}>
+                              2FA is Inactive
+                            </Typography>
+                          </Stack>
+                        )}
+                      </Stack>
+                      <Typography variant="body2" color="text.secondary">
+                        Two-Factor Authentication adds protection to your
+                        account.
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                  {twoFAEnabled ? (
+                    <Button
+                      variant="contained"
+                      onClick={handle2fa}
+                      size="large"
+                      sx={{
+                        bgcolor: "#c20000",
+                        color: "#d1d0d0",
+                        my: ".5rem",
+                        borderRadius: ".3rem",
+                        "&:hover ": {
+                          bgcolor: "#e00202",
+                        },
+                      }}
+                    >
+                      Disable 2FA
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handle2fa}
+                      size="large"
+                      sx={{ borderRadius: ".3rem", my: ".5rem" }}
+                    >
+                      Enable 2FA
+                    </Button>
+                  )}
+                </Paper>
+              </Stack>
+            </Stack>
+            <Stack mt={"2rem"}>
+              <Typography variant="h5">Linked Accounts</Typography>
+              <Typography color="text.secondary">
+                Link external accounts for faster and more secure logins.
+              </Typography>
+
+              <Stack
+                mt={"1.5rem"}
+                spacing={2}
+                border={"1px solid rgb(47, 47, 47)"}
+                p={"1rem"}
+                borderRadius={".5rem"}
+              >
+                <Paper
+                  sx={{
+                    display: "flex",
+                    px: ".7rem",
+                    py: "1.2rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
+                    <FaGoogle style={{ fontSize: "2rem" }} />
+                    <Typography variant="subtitle1">
+                      You can sign in using Google
                     </Typography>
                   </Stack>
-                </Stack>
-                {twoFAEnabled ? (
+                  {isGoogleConnected ? (
+                    <Button
+                      variant="outlined"
+                      onClick={handleGoogleConnect}
+                      size="large"
+                      color="error"
+                      sx={{
+                        my: ".5rem",
+                        borderRadius: ".3rem",
+                      }}
+                    >
+                      Disconnect
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={handleGoogleConnect}
+                      size="large"
+                      sx={{ borderRadius: ".3rem", my: ".5rem" }}
+                    >
+                      Connect
+                    </Button>
+                  )}
+                </Paper>
+
+                <Paper
+                  sx={{
+                    display: "flex",
+                    px: ".7rem",
+                    py: "1.2rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
+                    <IoLogoGithub style={{ fontSize: "2rem" }} />
+                    <Typography variant="subtitle1">
+                      You can sign in using Github
+                    </Typography>
+                  </Stack>
+                  {isGithubConnected ? (
+                    <Button
+                      variant="outlined"
+                      onClick={handleGithubConnect}
+                      size="large"
+                      color="error"
+                      sx={{
+                        my: ".5rem",
+                        borderRadius: ".3rem",
+                      }}
+                    >
+                      Disconnect
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={handleGithubConnect}
+                      size="large"
+                      sx={{ borderRadius: ".3rem", my: ".5rem" }}
+                    >
+                      Connect
+                    </Button>
+                  )}
+                </Paper>
+              </Stack>
+            </Stack>
+            <Stack mt={"2rem"}>
+              <Typography variant="h5">Account Deletion</Typography>
+              <Typography color="text.secondary">
+                Account deletion is permanent. Your data cannot be recovered
+                once this process is completed.
+              </Typography>
+              <Stack
+                mt={"1.5rem"}
+                spacing={2}
+                border={"1px solid rgb(47, 47, 47)"}
+                p={"1rem"}
+                borderRadius={".5rem"}
+              >
+                <Paper
+                  sx={{
+                    display: "flex",
+                    px: ".7rem",
+                    py: "1.2rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Stack direction={"row"} gap={"1.5rem"}>
+                    <FaRegTrashAlt
+                      style={{ fontSize: "2rem", color: "#c20000" }}
+                    />
+                    <Typography variant="subtitle1">
+                      Permanently delete my account
+                    </Typography>
+                  </Stack>
                   <Button
-                    variant="contained"
-                    onClick={handle2fa}
                     size="large"
                     sx={{
                       bgcolor: "#c20000",
@@ -371,191 +529,41 @@ function SettingsPage() {
                         bgcolor: "#e00202",
                       },
                     }}
+                    onClick={() => setShowDeleteComp(true)}
                   >
-                    Disable 2FA
+                    Delete account
                   </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    onClick={handle2fa}
-                    size="large"
-                    sx={{ borderRadius: ".3rem", my: ".5rem" }}
-                  >
-                    Enable 2FA
-                  </Button>
-                )}
-              </Paper>
+                </Paper>
+              </Stack>
             </Stack>
           </Stack>
-          <Stack mt={"2rem"}>
-            <Typography variant="h5">Linked Accounts</Typography>
-            <Typography color="text.secondary">
-              Link external accounts for faster and more secure logins.
-            </Typography>
+        </TabPanel>
 
-            <Stack
-              mt={"1.5rem"}
-              spacing={2}
-              border={"1px solid rgb(47, 47, 47)"}
-              p={"1rem"}
-              borderRadius={".5rem"}
-            >
-              <Paper
-                sx={{
-                  display: "flex",
-                  px: ".7rem",
-                  py: "1.2rem",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
-                  <FaGoogle style={{ fontSize: "2rem" }} />
-                  <Typography variant="subtitle1">
-                    You can sign in using Google
-                  </Typography>
-                </Stack>
-                {isGoogleConnected ? (
-                  <Button
-                    variant="outlined"
-                    onClick={handleGoogleConnect}
-                    size="large"
-                    color="error"
-                    sx={{
-                      my: ".5rem",
-                      borderRadius: ".3rem",
-                    }}
-                  >
-                    Disconnect
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outlined"
-                    onClick={handleGoogleConnect}
-                    size="large"
-                    sx={{ borderRadius: ".3rem", my: ".5rem" }}
-                  >
-                    Connect
-                  </Button>
-                )}
-              </Paper>
-
-              <Paper
-                sx={{
-                  display: "flex",
-                  px: ".7rem",
-                  py: "1.2rem",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Stack direction={"row"} gap={"1.5rem"} alignItems={"center"}>
-                  <IoLogoGithub style={{ fontSize: "2rem" }} />
-                  <Typography variant="subtitle1">
-                    You can sign in using Github
-                  </Typography>
-                </Stack>
-                {isGithubConnected ? (
-                  <Button
-                    variant="outlined"
-                    onClick={handleGithubConnect}
-                    size="large"
-                    color="error"
-                    sx={{
-                      my: ".5rem",
-                      borderRadius: ".3rem",
-                    }}
-                  >
-                    Disconnect
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outlined"
-                    onClick={handleGithubConnect}
-                    size="large"
-                    sx={{ borderRadius: ".3rem", my: ".5rem" }}
-                  >
-                    Connect
-                  </Button>
-                )}
-              </Paper>
-            </Stack>
-          </Stack>
-          <Stack mt={"2rem"}>
-            <Typography variant="h5">Account Deletion</Typography>
-            <Typography color="text.secondary">
-              Account deletion is permanent. Your data cannot be recovered once
-              this process is completed.
-            </Typography>
-            <Stack
-              mt={"1.5rem"}
-              spacing={2}
-              border={"1px solid rgb(47, 47, 47)"}
-              p={"1rem"}
-              borderRadius={".5rem"}
-            >
-              <Paper
-                sx={{
-                  display: "flex",
-                  px: ".7rem",
-                  py: "1.2rem",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Stack direction={"row"} gap={"1.5rem"}>
-                  <FaRegTrashAlt
-                    style={{ fontSize: "2rem", color: "#c20000" }}
-                  />
-                  <Typography variant="subtitle1">
-                    Permanently delete my account
-                  </Typography>
-                </Stack>
-                <Button
-                  size="large"
-                  sx={{
-                    bgcolor: "#c20000",
-                    color: "#d1d0d0",
-                    my: ".5rem",
-                    borderRadius: ".3rem",
-                    "&:hover ": {
-                      bgcolor: "#e00202",
-                    },
-                  }}
-                  onClick={() => setShowDeleteComp(true)}
-                >
-                  Delete account
-                </Button>
-              </Paper>
-            </Stack>
-          </Stack>
-        </Stack>
-      </TabPanel>
-
-      {(showPasswordComp ||
-        showDeleteComp ||
-        showUploadProfileImageComp ||
-        showDeleteProfileImageComp) && (
-        <Box>
-          <ChangePassword
-            open={showPasswordComp}
-            onClose={() => setShowPasswordComp(false)}
-          />
-          <DeleteAccount
-            open={showDeleteComp}
-            onClose={() => setShowDeleteComp(false)}
-          />
-          <DeleteProfileImage
-            open={showDeleteProfileImageComp}
-            onClose={() => setShowDeleteProfileImageComp(false)}
-          />
-          <UploadProfileImage
-            open={showUploadProfileImageComp}
-            onClose={() => setShowUploadProfileImageComp(false)}
-          />
-        </Box>
-      )}
-    </Container>
+        {(showPasswordComp ||
+          showDeleteComp ||
+          showUploadProfileImageComp ||
+          showDeleteProfileImageComp) && (
+          <Box>
+            <ChangePassword
+              open={showPasswordComp}
+              onClose={() => setShowPasswordComp(false)}
+            />
+            <DeleteAccount
+              open={showDeleteComp}
+              onClose={() => setShowDeleteComp(false)}
+            />
+            <DeleteProfileImage
+              open={showDeleteProfileImageComp}
+              onClose={() => setShowDeleteProfileImageComp(false)}
+            />
+            <UploadProfileImage
+              open={showUploadProfileImageComp}
+              onClose={() => setShowUploadProfileImageComp(false)}
+            />
+          </Box>
+        )}
+      </Container>
+    </Stack>
   );
 }
 
