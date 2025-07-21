@@ -32,9 +32,7 @@ const ContactUs = () => {
     fullName: z.string().min(1, "At least one name is required."),
     email: z.string().email("Invalid email address."),
     subject: z.string().min(3, "Subject is too short."),
-    message: z
-      .string()
-      .min(15, "Message is too short."),
+    message: z.string().min(15, "Message is too short."),
   });
 
   async function handleSubmitMessage() {

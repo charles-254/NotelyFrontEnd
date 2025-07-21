@@ -1,7 +1,9 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
+import axiosInstance from "../apis/axios";
+import { useMutation } from "@tanstack/react-query";
 
 interface DeleteAccountModalProps {
   open: boolean;
@@ -15,21 +17,17 @@ interface User {
   email: string | undefined;
   profileImageUrl: string | null | undefined;
 }
+interface ProfileImage {
+  profileImageUrl: string;
+}
 
 const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
   if (!open) return null;
-
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [user, setUser] = useState<User>({
-    //use the persisted user oject here
-    firstName: "Charles",
-    lastName: "Mwangi",
-    username: "darklight",
-    email: "darklight@gmail.com",
-    profileImageUrl: "",
-  });
+  const [user, _setUser] = useState<User>(userData);
 
   useEffect(() => {
     if (!imageFile) {
@@ -40,6 +38,11 @@ const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
     setPreviewUrl(url);
     return () => URL.revokeObjectURL(url);
   }, [imageFile]);
+
+  useEffect(() => {
+    if (user) {
+    }
+  }, [user]);
 
   const uploadImage = async () => {
     setUploading(true);
@@ -62,25 +65,40 @@ const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
         ...user,
         profileImageUrl: uploadedImageUrl,
       };
-
-      setUser(newUserInfo as User);
+      localStorage.setItem("user", JSON.stringify(newUserInfo));
       return uploadedImageUrl;
     } catch (err: any) {
       toast.error("Failed to upload image. Try again.");
-      console.error(err);
     } finally {
       setUploading(false);
       onClose();
     }
   };
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["update-profile-image"],
+    mutationFn: async (profileImageUrl: ProfileImage) => {
+      const response = await axiosInstance.patch("/api/user", profileImageUrl);
+      console.log(response.data);
+      return response.data;
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Failed to upload image. Try again.");
+      }
+    },
+    onSuccess: () => {
+      toast.success("Profile image uploaded successfully");
+    },
+  });
 
   const handleProfileImageUpload = async () => {
-    // handle updating the profile image url in db... use url from cloudinary..
     const uploadedImageUrl = await uploadImage();
     const newUserInfo = { profileImageUrl: uploadedImageUrl };
 
-    // mutate(newUserInfo)
-    toast.success("Profile image uploadedSuccessfully");
+    mutate(newUserInfo);
+
     onClose();
   };
 
@@ -144,7 +162,7 @@ const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
             variant="outlined"
             fullWidth
             onClick={handleProfileImageUpload}
-            loading={uploading}
+            loading={uploading || isPending}
           >
             Upload profile image
           </Button>

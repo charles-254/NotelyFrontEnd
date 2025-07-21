@@ -10,16 +10,19 @@ import {
 import { useState } from "react";
 import z from "zod";
 import { toast } from "react-toastify";
+import axiosInstance from "../apis/axios";
+import { useMutation } from "@tanstack/react-query";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { isAxiosError } from "axios";
 
 interface ChangePasswordModalProps {
   open: boolean;
   onClose: () => void;
 }
-// interface PasswordUpdate {
-//   currentPassword: string;
-//   newpassword: string;
-// }
+interface PasswordUpdate {
+  currentPassword: string;
+  newPassword: string;
+}
 
 const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,6 +50,28 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
       path: ["confirmNewPassword"],
     });
 
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["change-user-password"],
+    mutationFn: async (passwordData: PasswordUpdate) => {
+      const response = await axiosInstance.patch(
+        "/api/auth/password",
+        passwordData,
+      );
+      return response.data;
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Failed to change password.Pleas try again.");
+      }
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      onClose();
+    },
+  });
+
   function handleChangePassword() {
     const passwordData = { currentPassword, newPassword, confirmNewPassword };
     const result = changePasswordSchema.safeParse(passwordData);
@@ -64,11 +89,9 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
       setFormErrors(zodErrors);
       return;
     }
-
+    setFormErrors({});
     const { confirmNewPassword: _, ...passwords } = result.data;
-    // mutate(passwords) send ppasswords to server using useMutation
-    console.log(passwords);
-    toast.success("password Changed successffully");
+    mutate(passwords);
   }
 
   return (
@@ -179,8 +202,13 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             }}
           />
 
-          <Button variant="contained" onClick={handleChangePassword}>
-            Update Password
+          <Button
+            variant="contained"
+            onClick={handleChangePassword}
+            loading={isPending}
+            sx={{ borderRadius: 0 }}
+          >
+            change password
           </Button>
         </Stack>
       </Box>

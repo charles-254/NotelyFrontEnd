@@ -39,10 +39,10 @@ function AppearanceAndTheme() {
     <Stack direction={"row"}>
       <Sidebar />
       <Stack
-        height={"100vh"}
         justifyContent={"center"}
         alignItems={"center"}
         mx={"auto"}
+        my="3rem"
       >
         <Paper sx={{ width: "45rem", p: "2rem" }}>
           <Typography variant="h5" gutterBottom>

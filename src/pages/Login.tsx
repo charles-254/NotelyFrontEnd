@@ -18,6 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import axios from "axios";
 import z from "zod";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
@@ -37,6 +38,7 @@ function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const navigate = useNavigate();
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
@@ -48,11 +50,7 @@ function Login() {
   const { mutate, isPending } = useMutation({
     mutationKey: ["login-user"],
     mutationFn: async (userCreds: UserCreds) => {
-      const response = await axiosInstance.post(
-        "http://127.0.0.1:3000/api/auth/login",
-        userCreds,
-      );
-      console.log(response.data);
+      const response = await axiosInstance.post("/api/auth/login", userCreds);
       return response.data;
     },
     onError: (error) => {
@@ -62,9 +60,10 @@ function Login() {
         toast.error("Something went wrong. Please try again.");
       }
     },
-    onSuccess: () => {
-      //persist user infomation
+    onSuccess: (data) => {
+      localStorage.setItem("user", JSON.stringify(data.userInfo));
       toast.success("Authenticated successfully.");
+      navigate("/home");
     },
   });
 
@@ -242,7 +241,7 @@ function Login() {
             </Button>
 
             <Typography textAlign={"center"}>
-              Don't have an account?{" "}
+              Not a Notely member ?{" "}
               <Link underline="hover" href="/register">
                 Register here
               </Link>

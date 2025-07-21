@@ -33,6 +33,7 @@ import { MdContactSupport } from "react-icons/md";
 const drawerWidth = 160;
 
 function Sidebar() {
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showLogoutComp, setShowLogoutComp] = useState(false);
   const [open, setOpen] = useState(() => {
@@ -421,13 +422,19 @@ function Sidebar() {
               gap={".2rem"}
             >
               <a href="/profile">
-                <Avatar
-                  alt="FirstName.lastName Intials"
-                  src="/static/images/avatar/1.jpg"
-                  sx={{ bgcolor: "orangered" }}
-                />
+                {userData.profileImageUrl ? (
+                  <Avatar
+                    src={userData.profileImageUrl}
+                    sx={{ bgcolor: "orangered" }}
+                  />
+                ) : (
+                  <Avatar>
+                    {userData.firstName[0].toUpperCase()}
+                    {userData.lastName[0].toUpperCase()}
+                  </Avatar>
+                )}
               </a>
-              {open && <Typography>Username</Typography>}
+              {open && <Typography>{userData.username}</Typography>}
             </Stack>
           </List>
 

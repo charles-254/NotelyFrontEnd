@@ -15,14 +15,17 @@ import {
   InputLabel,
   Paper,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { isAxiosError } from "axios";
+import axiosInstance from "../apis/axios";
+import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import ChangePassword from "../components/ChangePassword";
 import DeleteAccount from "../components/DeleteAccount";
 import DeleteProfileImage from "../components/DeleteProfileImage";
 import UploadProfileImage from "../components/UploadProfileImage";
 import Sidebar from "../components/Sidebar";
-import { useEffect, useState } from "react";
 import { Person, Email } from "@mui/icons-material";
-import { toast } from "react-toastify";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoShieldHalfOutline } from "react-icons/io5";
@@ -31,11 +34,12 @@ import { IoLogoGithub } from "react-icons/io";
 import { LuDot } from "react-icons/lu";
 import { BsKeyFill } from "react-icons/bs";
 
-type User = {
+type UserSchema = {
   firstName: string | undefined;
   lastName: string | undefined;
   username: string | undefined;
   email: string | undefined;
+  profileImageUrl: string | undefined | null;
 };
 
 function TabPanel({ children, value, index }: any) {
@@ -47,6 +51,7 @@ function TabPanel({ children, value, index }: any) {
 }
 
 function SettingsPage() {
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [tab, setTab] = useState(0);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -62,13 +67,7 @@ function SettingsPage() {
   const [showDeleteProfileImageComp, setShowDeleteProfileImageComp] =
     useState(false);
 
-  const [user, setUser] = useState<User>({
-    //use the persisted user oject here
-    firstName: "Charles",
-    lastName: "Mwangi",
-    username: "darklight",
-    email: "darklight@gmail.com",
-  });
+  const [user, setUser] = useState<UserSchema>(userData);
 
   useEffect(() => {
     if (user) {
@@ -76,6 +75,7 @@ function SettingsPage() {
       setLastName(user.lastName!);
       setUsername(user.username!);
       setEmail(user.email!);
+      localStorage.setItem("user", JSON.stringify(user));
     }
   }, [user]);
 
@@ -85,10 +85,34 @@ function SettingsPage() {
     username !== user.username ||
     email !== user.email;
 
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["update-user-info"],
+    mutationFn: async (updatedUserInfo: UserSchema) => {
+      const response = await axiosInstance.patch("/api/user", updatedUserInfo);
+      return response.data;
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Failed to update profile detials.");
+      }
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+    },
+  });
+
   function handleUpdateUserDetails() {
-    const updatedUserInfo = { firstName, lastName, username, email };
+    const updatedUserInfo = {
+      firstName,
+      lastName,
+      username,
+      email,
+      profileImageUrl: user.profileImageUrl,
+    };
     setUser(updatedUserInfo);
-    toast.success("Changes saved successfully.");
+    mutate(updatedUserInfo);
   }
   function handle2fa() {
     //update value into the db
@@ -126,11 +150,25 @@ function SettingsPage() {
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Stack direction="row" spacing={3} alignItems="center">
-                <Avatar
-                  src="/avatar.png"
-                  alt="User Avatar"
-                  sx={{ width: "7rem", height: "7rem" }}
-                />
+                {user.profileImageUrl ? (
+                  <Avatar
+                    src={user.profileImageUrl}
+                    sx={{ width: "7rem", height: "7rem" }}
+                  />
+                ) : (
+                  <Avatar
+                    sx={{
+                      width: "7rem",
+                      height: "7rem",
+                      fontSize: "2.7rem",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {" "}
+                    {firstName && firstName[0].toUpperCase()}
+                    {lastName && lastName[0].toUpperCase()}
+                  </Avatar>
+                )}
                 <Stack
                   direction={"row"}
                   justifyContent={"space-between"}
@@ -256,6 +294,7 @@ function SettingsPage() {
               disabled={!isChanged}
               onClick={handleUpdateUserDetails}
               sx={{ width: "fit-content", borderRadius: ".3rem", py: ".7rem" }}
+              loading={isPending}
             >
               Save Changes
             </Button>

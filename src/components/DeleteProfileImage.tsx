@@ -1,17 +1,50 @@
 import { Box, Button, Stack, Typography, Alert } from "@mui/material";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
+import { isAxiosError } from "axios";
+import { useState } from "react";
 
 interface DeleteAccountModalProps {
   open: boolean;
   onClose: () => void;
 }
 
+type UserSchema = {
+  firstName: string | undefined;
+  lastName: string | undefined;
+  username: string | undefined;
+  email: string | undefined;
+  profileImageUrl: string | undefined | null;
+};
+
 const DeleteProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
   if (!open) return null;
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const [user, _setUser] = useState<UserSchema>(userData);
+
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["delete-profile-image"],
+    mutationFn: async (updatedUserInfo: UserSchema) => {
+      const response = await axiosInstance.patch("/api/user", updatedUserInfo);
+      return response.data;
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Failed to delete profile image.");
+      }
+    },
+    onSuccess: () => {
+      toast.success("Profile image deleted successfully.");
+    },
+  });
 
   function handleProfileImageDeletion() {
-    // handle removing profile image from db ... set profile url to empty
-    toast.success("Profile image removed successfully.");
+    const newUserinfo = { ...user, profileImageUrl: "" };
+    localStorage.setItem("user", JSON.stringify(newUserinfo));
+    mutate(newUserinfo);
     onClose();
   }
 
@@ -61,6 +94,7 @@ const DeleteProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
             fullWidth
             color="secondary"
             onClick={handleProfileImageDeletion}
+            loading={isPending}
           >
             Delete profile image
           </Button>
