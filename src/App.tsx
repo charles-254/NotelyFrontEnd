@@ -19,6 +19,8 @@ import ReportsAndViolationsCenter from "./pages/ReportsAndViolationsCenter";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfServicePage from "./pages/TermsOfService";
 import ContactUs from "./pages/ContactUs";
+import CreateNote from "./pages/CreateNote";
+import Profile from "./pages/Profile";
 
 function App() {
   const client = new QueryClient();
@@ -58,6 +60,8 @@ function App() {
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/settings/terms" element={<TermsOfServicePage />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/notes/create" element={<CreateNote />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

@@ -131,13 +131,16 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             type={showPassword ? "text" : "password"}
             label="Current Password"
             value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            onChange={(e) => {
+              formErrors.currentPassword = "";
+              setCurrentPassword(e.target.value);
+            }}
             fullWidth
             error={!!formErrors.currentPassword}
             helperText={formErrors.currentPassword}
             sx={inputStyles}
             FormHelperTextProps={{
-              sx: { fontSize: "1rem" },
+              sx: { fontSize: ".85rem" },
             }}
             InputProps={{
               endAdornment: (
@@ -155,13 +158,16 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             type={showNewPassword ? "text" : "password"}
             label="New Password"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            onChange={(e) => {
+              formErrors.newPassword = "";
+              setNewPassword(e.target.value);
+            }}
             fullWidth
             sx={inputStyles}
             error={!!formErrors.newPassword}
             helperText={formErrors.newPassword}
             FormHelperTextProps={{
-              sx: { fontSize: "1rem" },
+              sx: { fontSize: ".85rem" },
             }}
             InputProps={{
               endAdornment: (
@@ -179,13 +185,16 @@ const ChangePassword = ({ open, onClose }: ChangePasswordModalProps) => {
             type={showConfirmNewPassword ? "text" : "password"}
             label="Confirm New Password"
             value={confirmNewPassword}
-            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            onChange={(e) => {
+              formErrors.confirmNewPassword = "";
+              setConfirmNewPassword(e.target.value);
+            }}
             fullWidth
             error={!!formErrors.confirmNewPassword}
             helperText={formErrors.confirmNewPassword}
             sx={inputStyles}
             FormHelperTextProps={{
-              sx: { fontSize: "1rem" },
+              sx: { fontSize: ".85rem" },
             }}
             InputProps={{
               endAdornment: (

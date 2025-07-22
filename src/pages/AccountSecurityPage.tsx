@@ -104,11 +104,11 @@ function SettingsPage() {
   });
 
   function handleUpdateUserDetails() {
-    const updatedUserInfo = {
-      firstName,
-      lastName,
-      username,
-      email,
+    const updatedUserInfo: UserSchema = {
+      firstName: firstName.trim() !== "" ? firstName : user.firstName,
+      lastName: lastName.trim() !== "" ? lastName : user.lastName,
+      username: username.trim() !== "" ? username : user.username,
+      email: email.trim() !== "" ? email : user.email,
       profileImageUrl: user.profileImageUrl,
     };
     setUser(updatedUserInfo);

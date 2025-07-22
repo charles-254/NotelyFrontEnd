@@ -166,13 +166,16 @@ function Register() {
                 <TextField
                   label="First Name"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    formErrors.firstName = "";
+                    setFirstName(e.target.value);
+                  }}
                   fullWidth
                   variant="outlined"
                   error={!!formErrors.firstName}
                   helperText={formErrors.firstName}
                   FormHelperTextProps={{
-                    sx: { fontSize: "1rem" },
+                    sx: { fontSize: ".85rem" },
                   }}
                   sx={{
                     ...inputStyles,
@@ -197,13 +200,16 @@ function Register() {
                 <TextField
                   label="Last Name"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    formErrors.lastName = "";
+                    setLastName(e.target.value);
+                  }}
                   fullWidth
                   variant="outlined"
                   error={!!formErrors.lastName}
                   helperText={formErrors.lastName}
                   FormHelperTextProps={{
-                    sx: { fontSize: "1rem" },
+                    sx: { fontSize: ".85rem" },
                   }}
                   sx={{
                     ...inputStyles,
@@ -229,13 +235,16 @@ function Register() {
             <TextField
               label="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                formErrors.username = "";
+                setUsername(e.target.value);
+              }}
               fullWidth
               variant="outlined"
               error={!!formErrors.username}
               helperText={formErrors.username}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               sx={{
                 ...inputStyles,
@@ -259,13 +268,16 @@ function Register() {
             <TextField
               label="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                formErrors.email = "";
+                setEmail(e.target.value);
+              }}
               fullWidth
               variant="outlined"
               error={!!formErrors.email}
               helperText={formErrors.email}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               sx={{
                 ...inputStyles,
@@ -289,7 +301,10 @@ function Register() {
             <TextField
               label="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                formErrors.password = "";
+                setPassword(e.target.value);
+              }}
               type={showPassword ? "text" : "password"}
               fullWidth
               variant="outlined"
@@ -297,7 +312,7 @@ function Register() {
               error={!!formErrors.password}
               helperText={formErrors.password}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               sx={{
                 ...inputStyles,
@@ -331,7 +346,10 @@ function Register() {
             <TextField
               label="Confirm Password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {
+                formErrors.confirmPassword = "";
+                setConfirmPassword(e.target.value);
+              }}
               type={showConfirmPassword ? "text" : "password"}
               fullWidth
               variant="outlined"
@@ -339,7 +357,7 @@ function Register() {
               error={!!formErrors.confirmPassword}
               helperText={formErrors.confirmPassword}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               sx={{
                 ...inputStyles,

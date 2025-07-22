@@ -1,6 +1,9 @@
 import { Stack, Box, Typography, Button, Paper } from "@mui/material";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
+import { isAxiosError } from "axios";
 
 interface logoutProps {
   open: boolean;
@@ -11,10 +14,27 @@ function Logout({ open, onClose }: logoutProps) {
   const navigate = useNavigate();
   if (!open) return null;
 
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["logout-user"],
+    mutationFn: async () => {
+      const response = await axiosInstance.post("/api/auth/logout");
+      return response.data;
+    },
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Failed to logout.");
+      }
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      navigate("/");
+    },
+  });
+
   function handleLogout() {
-    // hndle call to api and stuff
-    toast.success("You have been logged out.");
-    navigate("/");
+    mutate();
   }
 
   return (
@@ -50,6 +70,7 @@ function Logout({ open, onClose }: logoutProps) {
             color="secondary"
             fullWidth
             onClick={handleLogout}
+            loading={isPending}
           >
             Logout
           </Button>

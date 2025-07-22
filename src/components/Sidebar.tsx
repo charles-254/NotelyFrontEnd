@@ -216,8 +216,8 @@ function Sidebar() {
 
             {open ? (
               <ListItemButton
-                selected={currentPath === "/entries/create"}
-                onClick={() => navigate("/entries/create")}
+                selected={currentPath === "/notes/create"}
+                onClick={() => navigate("/notes/create")}
               >
                 <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                   <FaPlus />
@@ -232,8 +232,8 @@ function Sidebar() {
                 sx={{ mb: ".5rem" }}
               >
                 <ListItemButton
-                  selected={currentPath === "/entries/create"}
-                  onClick={() => navigate("/entries/create")}
+                  selected={currentPath === "/notes/create"}
+                  onClick={() => navigate("/notes/create")}
                 >
                   <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
                     <FaPlus style={{ fontSize: "1.3rem" }} />

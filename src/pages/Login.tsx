@@ -156,14 +156,17 @@ function Login() {
             <TextField
               label="Email OR Username"
               value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              onChange={(e) => {
+                formErrors.identifier = "";
+                setIdentifier(e.target.value);
+              }}
               fullWidth
               variant="outlined"
               sx={inputStyles}
               error={!!formErrors.identifier}
               helperText={formErrors.identifier}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               InputProps={{
                 startAdornment: (
@@ -177,7 +180,10 @@ function Login() {
             <TextField
               label="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                formErrors.password = "";
+                setPassword(e.target.value);
+              }}
               type={showPassword ? "text" : "password"}
               fullWidth
               variant="outlined"
@@ -186,7 +192,7 @@ function Login() {
               helperText={formErrors.password}
               sx={inputStyles}
               FormHelperTextProps={{
-                sx: { fontSize: "1rem" },
+                sx: { fontSize: ".85rem" },
               }}
               InputProps={{
                 startAdornment: (
