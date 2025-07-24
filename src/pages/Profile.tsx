@@ -101,6 +101,7 @@ function Profile() {
               color="secondary"
               sx={{ height: "fit-content" }}
               size="large"
+              href="/settings/account"
             >
               {" "}
               Edit Profile

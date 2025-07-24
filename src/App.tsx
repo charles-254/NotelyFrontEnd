@@ -21,6 +21,8 @@ import TermsOfServicePage from "./pages/TermsOfService";
 import ContactUs from "./pages/ContactUs";
 import CreateNote from "./pages/CreateNote";
 import Profile from "./pages/Profile";
+import EditNote from "./pages/EditNote";
+import ReadNote from "./pages/ReadNote";
 
 function App() {
   const client = new QueryClient();
@@ -62,6 +64,8 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/notes/create" element={<CreateNote />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/notes/:noteId/edit" element={<EditNote />} />
+          <Route path="/notes/:noteId" element={<ReadNote />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

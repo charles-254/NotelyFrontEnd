@@ -41,17 +41,22 @@ function ReadLaters() {
   }
   return (
     <Stack>
-      <Stack>
+      <Stack
+        direction={"row"}
+        gap={"1rem"}
+        flexWrap={"wrap"}
+        justifyContent={"center"}
+      >
         {readLaterNotes &&
           readLaterNotes.map((note: any) => (
-            <Card sx={{ maxWidth: 345 }} key={note.id}>
+            <Card sx={{ width: 345 }} key={note.id}>
               <CardActionArea>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {note.title}
+                    {note.note.title}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {note.synopsis}
+                    {note.note.synopsis}
                   </Typography>
                 </CardContent>
               </CardActionArea>

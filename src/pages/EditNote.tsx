@@ -37,7 +37,7 @@ function EditNote() {
   const [isPublic, setIsPublic] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const noteId = useParams();
+  const { noteId } = useParams();
 
   const noteSchema = z.object({
     title: z.string().min(1, "Title is required."),
@@ -53,27 +53,26 @@ function EditNote() {
 
   const readTime = useMemo(() => estimateReadTime(content), [content]);
 
-  //   const {data} = useQuery({
-  //     queryKey: ["get-specific-blog"],
-  //     queryFn: async () => {
-  //         const response = await axiosInstance.get(`/api/notes/${noteId}`)
-  //         return response.data
-  //     }
-  //   })
-
-  // useEffect( () => {
-  //     if (data) {
-  //         setTitle(data.title)
-  //         setSynopsis(data.synopsis)
-  //         setContent(data.content)
-  //         setIsPublic(data.isPublic)
-  //     }
-  // })
+  const { data } = useQuery({
+    queryKey: ["get-specific-note"],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/api/notes/${noteId}`);
+      return response.data;
+    },
+  });
+  useEffect(() => {
+    if (data) {
+      setTitle(data.note.title);
+      setSynopsis(data.note.synopsis);
+      setContent(data.note.content);
+      setIsPublic(data.note.isPublic);
+    }
+  }, [data]);
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["create-note"],
     mutationFn: async (note: Note) => {
-      const response = await axiosInstance.post("/api/notes", note);
+      const response = await axiosInstance.patch(`/api/notes/${noteId}`, note);
       return response.data;
     },
     onError: (error) => {
@@ -88,7 +87,7 @@ function EditNote() {
     },
   });
 
-  function handleCreateNote() {
+  function handleUpdateNote() {
     const noteData = { title, synopsis, content };
     const result = noteSchema.safeParse(noteData);
     if (!result.success) {
@@ -118,12 +117,11 @@ function EditNote() {
       >
         <Box sx={{ width: "100%", maxWidth: "60%" }}>
           <Typography variant="h4" gutterBottom fontWeight={600}>
-            Create a New Note
+            Edit note
           </Typography>
 
           <Typography variant="body1" color="text.secondary" mb={3}>
-            Fill out the form below to add a new note. Markdown is supported in
-            the content field.
+            Refine your note
           </Typography>
 
           <Stack spacing={3}>
@@ -137,7 +135,7 @@ function EditNote() {
                 setTitle(e.target.value);
               }}
               error={!!formErrors.title}
-              helperText={formErrors.title || `${title.length}/100 characters`}
+              helperText={formErrors.title || `${title?.length}/100 characters`}
               inputProps={{ maxLength: 100 }}
               sx={inputStyles}
               FormHelperTextProps={{ sx: { fontSize: ".85rem" } }}
@@ -219,7 +217,7 @@ function EditNote() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleCreateNote}
+                onClick={handleUpdateNote}
                 sx={{ borderRadius: ".3rem" }}
                 loading={isPending}
               >
