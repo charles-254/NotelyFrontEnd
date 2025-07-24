@@ -25,7 +25,7 @@ import { FaTrashAlt } from "react-icons/fa";
 function Saves() {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data } = useQuery({
     queryKey: ["get-user-saves"],
     queryFn: async () => {
@@ -42,7 +42,7 @@ function Saves() {
     (page - 1) * ITEMS_PER_PAGE,
     page * ITEMS_PER_PAGE,
   );
-  
+
   const [deletingSavedNoteId, setDeletingSavedNoteId] = useState<string | null>(
     null,
   );
@@ -177,7 +177,11 @@ function Saves() {
                         )}
                       </IconButton>
                     </Tooltip>
-                    <Button size="small" color="primary" onClick={() => navigate(`/notes/${note.noteId}`)}>
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => navigate(`/notes/${note.noteId}`)}
+                    >
                       readmore
                     </Button>
                   </Stack>

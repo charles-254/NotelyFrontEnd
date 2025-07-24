@@ -27,10 +27,15 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import DeleteNote from "./DeleteNote";
+import { Note } from "@mui/icons-material";
 
 function UserNotes() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [showDeleteComp, setShowDeleteComp] = useState(false);
+  const [deleteNoteId, setDeleteNoteId] = useState("");
+
   const { data } = useQuery({
     queryKey: ["get-user-notes"],
     queryFn: async () => {
@@ -290,7 +295,12 @@ function UserNotes() {
                     placement="top"
                     componentsProps={tooltipStyles}
                   >
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setDeleteNoteId(note.id);
+                        setShowDeleteComp(true);
+                      }}
+                    >
                       <FaTrashAlt color="#e00202" size={20} />
                     </IconButton>
                   </Tooltip>
@@ -318,6 +328,15 @@ function UserNotes() {
           color="primary"
         />
       </Stack>
+      {showDeleteComp && (
+        <Stack>
+          <DeleteNote
+            noteId={deleteNoteId}
+            open={showDeleteComp}
+            onClose={() => setShowDeleteComp(false)}
+          />
+        </Stack>
+      )}
     </Stack>
   );
 }

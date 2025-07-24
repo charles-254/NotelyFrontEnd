@@ -23,6 +23,7 @@ import CreateNote from "./pages/CreateNote";
 import Profile from "./pages/Profile";
 import EditNote from "./pages/EditNote";
 import ReadNote from "./pages/ReadNote";
+import Trash from "./pages/Trash";
 
 function App() {
   const client = new QueryClient();
@@ -66,6 +67,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/notes/:noteId/edit" element={<EditNote />} />
           <Route path="/notes/:noteId" element={<ReadNote />} />
+          <Route path="/trash" element={<Trash />} />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

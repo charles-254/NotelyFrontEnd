@@ -25,7 +25,7 @@ import { FaTrashAlt } from "react-icons/fa";
 function Pins() {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data } = useQuery({
     queryKey: ["get-user-pins"],
     queryFn: async () => {
@@ -42,7 +42,7 @@ function Pins() {
     (page - 1) * ITEMS_PER_PAGE,
     page * ITEMS_PER_PAGE,
   );
-  
+
   const [unPinningNote, setUnpinningNote] = useState<string | null>(null);
   const deleteNoteFromPinsMutation = useMutation({
     mutationKey: ["unpin-note"],
@@ -108,7 +108,7 @@ function Pins() {
         {pinnedNotes &&
           pinnedNotes.map((note: any) => {
             const isOwner = note.note.authorId === userData.id;
-            console.log(note)
+            console.log(note);
             return (
               <Card sx={{ width: 360 }} key={note.id}>
                 <CardActionArea>
@@ -170,7 +170,11 @@ function Pins() {
                         )}
                       </IconButton>
                     </Tooltip>
-                    <Button size="small" color="primary" onClick={() => navigate(`/notes/${note.noteId}`)}>
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => navigate(`/notes/${note.noteId}`)}
+                    >
                       readmore
                     </Button>
                   </Stack>

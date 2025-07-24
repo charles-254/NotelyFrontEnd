@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 import Markdown from "markdown-to-jsx";
 import { useParams } from "react-router-dom";
 import { IoIosMore } from "react-icons/io";
-import { LuCirclePlay } from "react-icons/lu";
 import { LuShare } from "react-icons/lu";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -31,7 +30,6 @@ function ReadNote() {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [following, setFollowing] = useState(false);
 
-
   function handleFollow() {
     setFollowing(!following);
   }
@@ -45,23 +43,14 @@ function ReadNote() {
     },
   });
   console.log(data);
- const isUserAmongSavers = data?.note?.saves.some(
-  (save: { userId: string }) => save.userId === userData.id
-);
+  const isUserAmongSavers = data?.note?.saves.some(
+    (save: { userId: string }) => save.userId === userData.id,
+  );
 
-const isUserAmongPinners = data?.note?.pins.some(
-  (pin: { userId: string }) => pin.userId === userData.id
-);
+  const isUserAmongPinners = data?.note?.pins.some(
+    (pin: { userId: string }) => pin.userId === userData.id,
+  );
 
-
-  console.log(isUserAmongPinners)
-  console.log(isUserAmongSavers)
-  console.log(userData.id)
-
-  // let isOwner = false;
-  // if (data?.note && userData?.username === data?.note?.author.username) {
-  //   isOwner = true;
-  // }
   function formatNoteDate(dateString: string): string {
     const date = new Date(dateString);
     const now = new Date();
@@ -84,8 +73,11 @@ const isUserAmongPinners = data?.note?.pins.some(
       year: "numeric",
     }).format(date);
   }
+
   const [savingNoteId, setSavingNoteId] = useState<string | null>(null);
-  const [deletingSavedNoteId, setDeletingSavedNoteId] = useState<string | null>(null);
+  const [deletingSavedNoteId, setDeletingSavedNoteId] = useState<string | null>(
+    null,
+  );
   const [pinningNote, setPinningNote] = useState<string | null>(null);
   const [unPinningNote, setUnpinningNote] = useState<string | null>(null);
 
@@ -323,16 +315,6 @@ const isUserAmongPinners = data?.note?.pins.some(
                     </Tooltip>
                   )}
 
-                  <Tooltip
-                    title="Listen"
-                    placement="top"
-                    componentsProps={tooltipStyles}
-                    arrow
-                  >
-                    <IconButton sx={{ fontSize: "1.5rem" }}>
-                      <LuCirclePlay style={{ color: "rgb(156, 156, 156)" }} />
-                    </IconButton>
-                  </Tooltip>
                   <Tooltip
                     title="Share"
                     placement="top"
