@@ -28,12 +28,8 @@ function ReadNote() {
   const queryClient = useQueryClient();
   const { noteId } = useParams();
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
-  const [following, setFollowing] = useState(false);
 
-  function handleFollow() {
-    setFollowing(!following);
-  }
-
+ 
   const { data } = useQuery({
     queryKey: ["get-specific-note"],
     queryFn: async () => {
