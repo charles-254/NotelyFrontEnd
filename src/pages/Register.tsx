@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
+import axiosInstance from "../apis/axios";
 
 type User = {
   firstName: string;
@@ -46,8 +47,8 @@ function Register() {
   const { mutate, isPending } = useMutation({
     mutationKey: ["register-user"],
     mutationFn: async (userData: User) => {
-      const response = await axios.post(
-        "http://127.0.0.1:3000/api/auth/register",
+      const response = await axiosInstance.post(
+        "/api/auth/register",
         userData,
       );
       console.log(response.data);
