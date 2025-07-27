@@ -22,6 +22,7 @@ function Trash() {
       return response.data;
     },
   });
+  console.log(data)
 
   const ITEMS_PER_PAGE = 6;
   const [page, setPage] = useState(1);
@@ -29,7 +30,7 @@ function Trash() {
 
   const trashedNotes = data?.slice(
     (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
+    page * ITEMS_PER_PAGE,
   );
 
   if (isLoading) {

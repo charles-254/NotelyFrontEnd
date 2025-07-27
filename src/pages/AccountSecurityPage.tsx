@@ -598,6 +598,9 @@ function SettingsPage() {
             <UploadProfileImage
               open={showUploadProfileImageComp}
               onClose={() => setShowUploadProfileImageComp(false)}
+              onUploadSuccess={(newImageUrl: string) => {
+                setUser((prev) => ({ ...prev, profileImageUrl: newImageUrl }));
+              }}
             />
           </Box>
         )}

@@ -14,6 +14,8 @@ import Pins from "../components/Pins";
 import ReadLaters from "../components/ReadLaters";
 import Saves from "../components/Saves";
 import UserNotes from "../components/UserNotes";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,6 +53,13 @@ function Profile() {
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  const { data } = useQuery({
+      queryKey: ["get-user-notes"],
+      queryFn: async () => {
+        const response = await axiosInstance.get("/api/notes/myNotes");
+        return response.data;
+      },
+    });
 
   return (
     <Stack direction={"row"}>
@@ -91,8 +100,8 @@ function Profile() {
                   @{userData.username}
                 </Typography>
                 <Box display={"flex"} gap={"1rem"}>
-                  <Chip variant="outlined" label="13 following" />
-                  <Chip variant="outlined" label="13 followers" />
+                  <Chip variant="outlined" label={`${data && data[0]?.author.followers.length} followers`} />
+                  <Chip variant="outlined" label={`${data && data[0]?.author.following.length} following`}/>
                 </Box>
               </Stack>
             </Stack>

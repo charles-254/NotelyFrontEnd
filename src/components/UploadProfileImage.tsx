@@ -5,9 +5,10 @@ import axios, { isAxiosError } from "axios";
 import axiosInstance from "../apis/axios";
 import { useMutation } from "@tanstack/react-query";
 
-interface DeleteAccountModalProps {
+interface UploadprofileImageModalProps {
   open: boolean;
   onClose: () => void;
+  onUploadSuccess: (newImageUrl: string) => void;
 }
 
 interface User {
@@ -21,7 +22,11 @@ interface ProfileImage {
   profileImageUrl: string;
 }
 
-const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
+const UploadProfileImage = ({
+  open,
+  onClose,
+  onUploadSuccess,
+}: UploadprofileImageModalProps) => {
   if (!open) return null;
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -65,6 +70,8 @@ const UploadProfileImage = ({ open, onClose }: DeleteAccountModalProps) => {
         ...user,
         profileImageUrl: uploadedImageUrl,
       };
+      onUploadSuccess(uploadedImageUrl);
+
       localStorage.setItem("user", JSON.stringify(newUserInfo));
       return uploadedImageUrl;
     } catch (err: any) {

@@ -434,7 +434,18 @@ function Sidebar() {
                   </Avatar>
                 )}
               </a>
-              {open && <Typography>{userData.username}</Typography>}
+              {open && (
+                <Typography
+                  noWrap
+                  sx={{
+                    maxWidth: 100,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {userData.username}
+                </Typography>
+              )}
             </Stack>
           </List>
 

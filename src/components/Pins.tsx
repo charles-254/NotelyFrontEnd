@@ -77,7 +77,7 @@ function Pins() {
     if (diffInSeconds < 60) return `${diffInSeconds} sec ago`;
     if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
     if (diffInHours < 24)
-      return `${diffInHours} hr${diffInHours > 1 ? "s" : ""} ago`;
+      return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
     if (diffInDays === 1) return "yesterday";
     if (diffInDays < 2) return `${diffInDays} days ago`;
 
@@ -108,19 +108,23 @@ function Pins() {
         {pinnedNotes &&
           pinnedNotes.map((note: any) => {
             const isOwner = note.note.authorId === userData.id;
-            console.log(note);
             return (
-              <Card sx={{ width: 360 }} key={note.id}>
-                <CardActionArea>
+              <Card sx={{ width: 385,
+                      display: "flex",
+                      flexDirection: "column",
+                      minHeight: 270, }}key={note.id}>
+                <CardActionArea sx={{ flexGrow: 1 }}>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant="h6" component="div">
                       {note.note.title}
                     </Typography>
                     <Typography
                       variant="body2"
                       sx={{ color: "text.secondary" }}
                     >
-                      {note.note.synopsis}
+                      {note.note.synopsis.length > 140
+                            ? `${note.note.synopsis.slice(0, 200)}...`
+                            : note.note.synopsis}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -130,8 +134,8 @@ function Pins() {
                     alignItems={"center"}
                     spacing={".5rem"}
                   >
-                    {note.user.profileImageUrl ? (
-                      <Avatar src={note.user.profileImageUrl} />
+                    {note.note.author.profileImageUrl ? (
+                      <Avatar src={note.note.author.profileImageUrl} />
                     ) : (
                       <Avatar>
                         {note.user.firstName[0].toUpperCase()}
@@ -144,7 +148,12 @@ function Pins() {
                       {isOwner ? (
                         <Typography>By you</Typography>
                       ) : (
-                        <Typography>{note.note.author.username}</Typography>
+                        <Typography noWrap
+                        sx={{
+                          maxWidth: 110,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}>{note.note.author.username}</Typography>
                       )}
                     </Link>
                     <Typography variant="body2" color="text.secondary">
