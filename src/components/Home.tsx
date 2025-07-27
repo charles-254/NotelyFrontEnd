@@ -45,7 +45,7 @@ function Home() {
     },
   });
 
-const { data: savedNotes, isLoading: _isLoadingSaves } = useQuery({
+const { data: savedNotes, } = useQuery({
     queryKey: ["get-saved-notes"],
     queryFn: async () => {
       const response = await axiosInstance.get("/api/notes/mySaves");
@@ -54,7 +54,7 @@ const { data: savedNotes, isLoading: _isLoadingSaves } = useQuery({
     },
   });
 
-  const { data: readLaterNotes, isLoading: _isLoadingReadLaters } = useQuery({
+  const { data: readLaterNotes, } = useQuery({
     queryKey: ["get-readLater-notes"],
     queryFn: async () => {
       const response = await axiosInstance.get("/api/notes/myReadLaters");

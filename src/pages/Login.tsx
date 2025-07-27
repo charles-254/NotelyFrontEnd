@@ -85,8 +85,7 @@ function Login() {
       return;
     }
     setFormErrors({});
-    const validUserData = { ...result.data, rememberMe };
-    navigate("/login")
+    const validUserData = { ...result.data, rememberMe }
     mutate(validUserData);
   }
 
