@@ -12,7 +12,6 @@ import { deepOrange } from "@mui/material/colors";
 
 function Navbar() {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
-  const profileImageUrl = true;
 
   if (userData) {
     return (
