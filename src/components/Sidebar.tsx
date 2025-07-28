@@ -9,7 +9,6 @@ import {
   ListItemButton,
   Stack,
   Typography,
-  Badge,
   Avatar,
   Box,
 } from "@mui/material";
@@ -20,9 +19,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
 import { FaPowerOff } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
-import { IoNotifications } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa";
-import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa6";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -242,64 +239,8 @@ function Sidebar() {
               </Tooltip>
             )}
 
-            {open ? (
-              <ListItemButton
-                selected={currentPath === "/analytics"}
-                onClick={() => navigate("/analytics")}
-              >
-                <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
-                  <FaArrowTrendUp />
-                </ListItemIcon>
-                <ListItemText primary="Analytics" />
-              </ListItemButton>
-            ) : (
-              <Tooltip
-                title="Analytics"
-                placement="right"
-                componentsProps={styling}
-                sx={{ mb: ".5rem" }}
-              >
-                <ListItemButton
-                  selected={currentPath === "/analytics"}
-                  onClick={() => navigate("/analytics")}
-                >
-                  <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
-                    <FaArrowTrendUp style={{ fontSize: "1.3rem" }} />
-                  </ListItemIcon>
-                </ListItemButton>
-              </Tooltip>
-            )}
-            {open ? (
-              <ListItemButton
-                selected={currentPath === "/updates"}
-                onClick={() => navigate("/updates")}
-              >
-                <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
-                  <Badge color="error" variant="dot">
-                    <IoNotifications />
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText primary="Updates" />
-              </ListItemButton>
-            ) : (
-              <Tooltip
-                title="Updates"
-                placement="right"
-                componentsProps={styling}
-                sx={{ mb: ".5rem" }}
-              >
-                <ListItemButton
-                  selected={currentPath === "/updates"}
-                  onClick={() => navigate("/updates")}
-                >
-                  <ListItemIcon sx={{ minWidth: 32, mr: 1 }}>
-                    <Badge badgeContent={4} max={99} color="error">
-                      <IoNotifications style={{ fontSize: "1.3rem" }} />
-                    </Badge>
-                  </ListItemIcon>
-                </ListItemButton>
-              </Tooltip>
-            )}
+            
+            
 
             {open ? (
               <ListItemButton

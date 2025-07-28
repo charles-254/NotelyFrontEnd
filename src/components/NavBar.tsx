@@ -5,15 +5,15 @@ import {
   Stack,
   Button,
   Link,
-  Avatar,
+  Avatar, Box
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 
 function Navbar() {
-  const user = false;
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const profileImageUrl = true;
 
-  if (user) {
+  if (userData) {
     return (
       <AppBar
         position="static"
@@ -29,19 +29,20 @@ function Navbar() {
           }}
         >
           <Typography variant="h4" color="primary" fontWeight={600}>
+            <Box component={'img'} src="/logo.png"/>
             Notely
           </Typography>
           <Stack direction="row" spacing={3} sx={{ alignItems: "center" }}>
-            <Link variant="h6" href="#" fontSize={"1.1rem"}>
+            <Link variant="h6" href="/profile" fontSize={"1.1rem"}>
               My Notes
             </Link>
-            <Link variant="h6" href="#" fontSize={"1.1rem"}>
+            <Link variant="h6" href="/notes/create" fontSize={"1.1rem"}>
               New Entry
             </Link>
-            <Link variant="h6" href="#" fontSize={"1.1rem"}>
+            <Link variant="h6" href="/trash" fontSize={"1.1rem"}>
               Trash
             </Link>
-            <Link variant="h6" href="#" fontSize={"1.1rem"}>
+            <Link variant="h6" href="/profile" fontSize={"1.1rem"}>
               Profile
             </Link>
 
