@@ -34,6 +34,7 @@ function Logout({ open, onClose }: logoutProps) {
   });
 
   function handleLogout() {
+    localStorage.clear()
     mutate();
   }
 
