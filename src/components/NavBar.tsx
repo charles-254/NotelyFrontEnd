@@ -11,7 +11,8 @@ import {
 import { deepOrange } from "@mui/material/colors";
 
 function Navbar() {
-  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const storedUser = localStorage.getItem("user");
+  const userData = storedUser ? JSON.parse(storedUser) : null;
 
   if (userData) {
     return (
@@ -64,8 +65,8 @@ function Navbar() {
                   color: "white",
                 }}
               >
-                {userData.firstName[0].toUpperCase()}
-                {userData.lastName[0].toUpperCase()}
+                {userData?.firstName[0].toUpperCase()}
+                {userData?.lastName[0].toUpperCase()}
               </Avatar>
             )}
           </Stack>
