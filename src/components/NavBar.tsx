@@ -50,12 +50,12 @@ function Navbar() {
             </Link>
 
             <Typography variant="h6">
-              Welcome <Link href="/user/account">username</Link>
+              Welcome <Link href="/user/account">{userData.username}</Link>
             </Typography>
-            {profileImageUrl ? (
+            {userData.profileImageUrl ? (
               <Avatar sx={{ height: 50, width: 50 }}>
                 {" "}
-                <img src={"profileImageUrl"} alt="" width={80} />
+                <img src={userData.profileImageUrl} alt="" width={80} />
               </Avatar>
             ) : (
               <Avatar
@@ -65,7 +65,7 @@ function Navbar() {
                   color: "white",
                 }}
               >
-                DA
+                {userData.firstName[0].toUpperCase()}{userData.lastName[0].toUpperCase()}
               </Avatar>
             )}
           </Stack>
