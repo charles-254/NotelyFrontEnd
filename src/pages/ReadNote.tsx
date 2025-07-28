@@ -29,7 +29,6 @@ function ReadNote() {
   const { noteId } = useParams();
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
- 
   const { data } = useQuery({
     queryKey: ["get-specific-note"],
     queryFn: async () => {
@@ -46,13 +45,13 @@ function ReadNote() {
   const isUserAmongPinners = data?.note?.pins.some(
     (pin: { userId: string }) => pin.userId === userData.id,
   );
-  
-  const isUserAmongFollowers = data?.note?.author.followers.some(
-  (follower: {followerId: string}) => follower.followerId === userData.id
-);
 
-  const numberOfFollowers =  data?.note?.author.followers.length
-  const numberOfFollowing = data?.note?.author.following.length
+  const isUserAmongFollowers = data?.note?.author.followers.some(
+    (follower: { followerId: string }) => follower.followerId === userData.id,
+  );
+
+  const numberOfFollowers = data?.note?.author.followers.length;
+  const numberOfFollowing = data?.note?.author.following.length;
 
   function formatNoteDate(dateString: string): string {
     const date = new Date(dateString);
@@ -173,26 +172,27 @@ function ReadNote() {
       toast.success(data.message);
     },
   });
- 
+
   const followUserMutation = useMutation({
     mutationKey: ["follow-user"],
     mutationFn: async (followerId) => {
-      const response = await axiosInstance.post(`/api/user/${followerId}/followUser` )
-      return response.data
+      const response = await axiosInstance.post(
+        `/api/user/${followerId}/followUser`,
+      );
+      return response.data;
     },
     onError: (error) => {
-      if (isAxiosError(error)){
-        toast.error(error.response?.data.error)
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.error);
       } else {
-        toast.error("Failed to follow user. Try again later")
+        toast.error("Failed to follow user. Try again later");
       }
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["get-specific-note"] });
-      toast.success(data.message)
-    }
-  })
-
+      toast.success(data.message);
+    },
+  });
 
   return (
     <Stack direction={"row"} justifyContent={"center"} mt={"2rem"}>
@@ -234,8 +234,14 @@ function ReadNote() {
                   </Typography>
                 </Stack>
                 <Stack gap={".3rem"}>
-                  <Chip variant="outlined" label={`${numberOfFollowing} following`} />
-                  <Chip variant="outlined" label={`${numberOfFollowers} followers`} />
+                  <Chip
+                    variant="outlined"
+                    label={`${numberOfFollowing} following`}
+                  />
+                  <Chip
+                    variant="outlined"
+                    label={`${numberOfFollowers} followers`}
+                  />
                 </Stack>
                 <Stack>
                   <Typography variant="body2">
@@ -250,8 +256,8 @@ function ReadNote() {
                   sx={{ height: "fit-content" }}
                   loading={followUserMutation.isPending}
                   onClick={() => {
-  followUserMutation.mutate( data.note.authorId );
-}}
+                    followUserMutation.mutate(data.note.authorId);
+                  }}
                 >
                   {isUserAmongFollowers ? "unfollow" : "follow"}
                 </Button>

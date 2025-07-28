@@ -49,10 +49,15 @@ function ReadLaters() {
       >
         {readLaterNotes &&
           readLaterNotes.map((note: any) => (
-            <Card sx={{ width: 385,
-                      display: "flex",
-                      flexDirection: "column",
-                      minHeight: 270, }} key={note.id}>
+            <Card
+              sx={{
+                width: 385,
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 270,
+              }}
+              key={note.id}
+            >
               <CardActionArea sx={{ flexGrow: 1 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h6" component="div">
@@ -60,8 +65,8 @@ function ReadLaters() {
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
                     {note.note.synopsis.length > 140
-                            ? `${note.note.synopsis.slice(0, 200)}...`
-                            : note.note.synopsis}
+                      ? `${note.note.synopsis.slice(0, 200)}...`
+                      : note.note.synopsis}
                   </Typography>
                 </CardContent>
               </CardActionArea>

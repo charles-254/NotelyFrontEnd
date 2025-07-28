@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 
 function Home() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { isLoading, data: allNotes } = useQuery({
     queryKey: ["get-public-notes"],
@@ -45,31 +45,28 @@ function Home() {
     },
   });
 
-const { data: savedNotes, } = useQuery({
+  const { data: savedNotes } = useQuery({
     queryKey: ["get-saved-notes"],
     queryFn: async () => {
       const response = await axiosInstance.get("/api/notes/mySaves");
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
     },
   });
 
-  const { data: readLaterNotes, } = useQuery({
+  const { data: readLaterNotes } = useQuery({
     queryKey: ["get-readLater-notes"],
     queryFn: async () => {
       const response = await axiosInstance.get("/api/notes/myReadLaters");
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
     },
   });
-
-
 
   const pinnedNoteIds = pinnedNotes?.map((p: any) => p.note.id) || [];
   const pinnedNotesList = pinnedNotes?.map((p: any) => p.note) || [];
   const savedNotesIds = savedNotes?.map((s: any) => s.noteId) || [];
   const readLaterNotesIds = readLaterNotes?.map((s: any) => s.noteId) || [];
-  
 
   const unpinnedPublicNotes =
     allNotes?.filter((note: any) => !pinnedNoteIds.includes(note.id)) || [];
@@ -97,14 +94,15 @@ const { data: savedNotes, } = useQuery({
   };
 
   const filteredNotes = combinedNotes.filter((note: any) => {
-  const lowerSearch = searchTerm.toLowerCase();
-  const titleMatch = note.title.toLowerCase().includes(lowerSearch);
-  const synopsisMatch = note.synopsis.toLowerCase().includes(lowerSearch);
-  const contentMatch = note.content.toLowerCase().includes(lowerSearch);
-  const usernameMatch = note.author.username.toLowerCase().includes(lowerSearch);
-  return titleMatch || usernameMatch || synopsisMatch || contentMatch
-});
-
+    const lowerSearch = searchTerm.toLowerCase();
+    const titleMatch = note.title.toLowerCase().includes(lowerSearch);
+    const synopsisMatch = note.synopsis.toLowerCase().includes(lowerSearch);
+    const contentMatch = note.content.toLowerCase().includes(lowerSearch);
+    const usernameMatch = note.author.username
+      .toLowerCase()
+      .includes(lowerSearch);
+    return titleMatch || usernameMatch || synopsisMatch || contentMatch;
+  });
 
   const totalPages = Math.ceil(filteredNotes.length / ITEMS_PER_PAGE);
 
@@ -214,12 +212,12 @@ const { data: savedNotes, } = useQuery({
     },
   });
 
-
-
   const readLaterNoteMutation = useMutation({
     mutationKey: ["save-note-to-readlater"],
     mutationFn: async (noteId: string) => {
-      const response = await axiosInstance.post(`/api/notes/${noteId}/readLater`);
+      const response = await axiosInstance.post(
+        `/api/notes/${noteId}/readLater`,
+      );
       return response.data;
     },
     onError: (error) => {
@@ -238,7 +236,9 @@ const { data: savedNotes, } = useQuery({
   const deleteNoteFromReadLatersMutation = useMutation({
     mutationKey: ["remove-note-from-readlater"],
     mutationFn: async (noteId: string) => {
-      const response = await axiosInstance.delete(`/api/notes/${noteId}/unReadLater`);
+      const response = await axiosInstance.delete(
+        `/api/notes/${noteId}/unReadLater`,
+      );
       return response.data;
     },
     onError: (error) => {
@@ -314,8 +314,8 @@ const { data: savedNotes, } = useQuery({
             >
               {publicNotes.map((note: any) => {
                 const isPinned = pinnedNoteIds.includes(note.id);
-                const isSaved = savedNotesIds.includes(note.id)
-                const isReadLater = readLaterNotesIds.includes(note.id)
+                const isSaved = savedNotesIds.includes(note.id);
+                const isReadLater = readLaterNotesIds.includes(note.id);
                 return (
                   <Card
                     sx={{
@@ -352,35 +352,39 @@ const { data: savedNotes, } = useQuery({
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                    <CardActions sx={{justifyContent:"space-between"}}>
-                      <Stack direction={'row'} alignItems={'center'} gap={'.5rem'}>
-                        {note.author.profileImageUrl ? (
-                        <Avatar src={note.author.profileImageUrl} />
-                      ) : (
-                        <Avatar>
-                          {note.author.firstName[0].toUpperCase()}
-                          {note.author.lastName[0].toUpperCase()}
-                        </Avatar>
-                      )}
-                      <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{
-                          maxWidth: 85,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
+                    <CardActions sx={{ justifyContent: "space-between" }}>
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        gap={".5rem"}
                       >
-                        {note.author.username}
-                      </Typography>
-                      <Typography> • </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {formatNoteDate(note.createdAt)}
-                      </Typography>
-                      <Typography> • </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {note.readTime} min read
-                      </Typography>
+                        {note.author.profileImageUrl ? (
+                          <Avatar src={note.author.profileImageUrl} />
+                        ) : (
+                          <Avatar>
+                            {note.author.firstName[0].toUpperCase()}
+                            {note.author.lastName[0].toUpperCase()}
+                          </Avatar>
+                        )}
+                        <Typography
+                          variant="body2"
+                          noWrap
+                          sx={{
+                            maxWidth: 85,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {note.author.username}
+                        </Typography>
+                        <Typography> • </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {formatNoteDate(note.createdAt)}
+                        </Typography>
+                        <Typography> • </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {note.readTime} min read
+                        </Typography>
                       </Stack>
 
                       <Tooltip
@@ -407,23 +411,27 @@ const { data: savedNotes, } = useQuery({
                             horizontal: "right",
                           }}
                         >
-                          {
-                            isReadLater ? (<MenuItem
-                            onClick={() => {
-                              deleteNoteFromReadLatersMutation.mutate(note.id)
-                              handleMenuClose();
-                            }}
-                          >
-                            Remove from Read Later
-                          </MenuItem>) : (<MenuItem
-                            onClick={() => {
-                              readLaterNoteMutation.mutate(note.id)
-                              handleMenuClose();
-                            }}
-                          >
-                            Save to Read Later
-                          </MenuItem>)
-                          }
+                          {isReadLater ? (
+                            <MenuItem
+                              onClick={() => {
+                                deleteNoteFromReadLatersMutation.mutate(
+                                  note.id,
+                                );
+                                handleMenuClose();
+                              }}
+                            >
+                              Remove from Read Later
+                            </MenuItem>
+                          ) : (
+                            <MenuItem
+                              onClick={() => {
+                                readLaterNoteMutation.mutate(note.id);
+                                handleMenuClose();
+                              }}
+                            >
+                              Save to Read Later
+                            </MenuItem>
+                          )}
 
                           <MenuItem
                             onClick={() => {
@@ -442,7 +450,7 @@ const { data: savedNotes, } = useQuery({
                             <MenuItem
                               onClick={() => {
                                 console.log("Unpinning note:", note.id);
-                                deleteNoteFromPinsMutation.mutate(note.id)
+                                deleteNoteFromPinsMutation.mutate(note.id);
                                 handleMenuClose();
                               }}
                             >
@@ -452,7 +460,7 @@ const { data: savedNotes, } = useQuery({
                             <MenuItem
                               onClick={() => {
                                 console.log("Pinning note:", note.id);
-                                pinNoteMutation.mutate(note.id)
+                                pinNoteMutation.mutate(note.id);
                                 handleMenuClose();
                               }}
                             >
@@ -460,25 +468,27 @@ const { data: savedNotes, } = useQuery({
                             </MenuItem>
                           )}
 
-                          {
-                            isSaved ? (<MenuItem
-                            onClick={() => {
-                              console.log("UnSaving note:", note.id);
-                              deleteNoteFromSavesMutation.mutate(note.id)
-                              handleMenuClose();
-                            }}
-                          >
-                            UnSave
-                          </MenuItem>) : (<MenuItem
-                            onClick={() => {
-                              console.log("Saving note:", note.id);
-                              saveNoteMutation.mutate(note.id)
-                              handleMenuClose();
-                            }}
-                          >
-                            Save
-                          </MenuItem>)
-                          }
+                          {isSaved ? (
+                            <MenuItem
+                              onClick={() => {
+                                console.log("UnSaving note:", note.id);
+                                deleteNoteFromSavesMutation.mutate(note.id);
+                                handleMenuClose();
+                              }}
+                            >
+                              UnSave
+                            </MenuItem>
+                          ) : (
+                            <MenuItem
+                              onClick={() => {
+                                console.log("Saving note:", note.id);
+                                saveNoteMutation.mutate(note.id);
+                                handleMenuClose();
+                              }}
+                            >
+                              Save
+                            </MenuItem>
+                          )}
                         </Menu>
                       )}
                     </CardActions>

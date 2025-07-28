@@ -54,12 +54,12 @@ function Profile() {
     setValue(newValue);
   };
   const { data } = useQuery({
-      queryKey: ["get-user-notes"],
-      queryFn: async () => {
-        const response = await axiosInstance.get("/api/notes/myNotes");
-        return response.data;
-      },
-    });
+    queryKey: ["get-user-notes"],
+    queryFn: async () => {
+      const response = await axiosInstance.get("/api/notes/myNotes");
+      return response.data;
+    },
+  });
 
   return (
     <Stack direction={"row"}>
@@ -100,8 +100,14 @@ function Profile() {
                   @{userData.username}
                 </Typography>
                 <Box display={"flex"} gap={"1rem"}>
-                  <Chip variant="outlined" label={`${data && data[0]?.author.followers.length} followers`} />
-                  <Chip variant="outlined" label={`${data && data[0]?.author.following.length} following`}/>
+                  <Chip
+                    variant="outlined"
+                    label={`${data && data[0]?.author.followers.length} followers`}
+                  />
+                  <Chip
+                    variant="outlined"
+                    label={`${data && data[0]?.author.following.length} following`}
+                  />
                 </Box>
               </Stack>
             </Stack>

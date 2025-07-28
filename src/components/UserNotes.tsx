@@ -12,7 +12,8 @@ import {
   CardActions,
   Tooltip,
   IconButton,
-  CircularProgress,Chip
+  CircularProgress,
+  Chip,
 } from "@mui/material";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
@@ -189,24 +190,39 @@ function UserNotes() {
           const isAuthorAmongPinners = note.pins.some(
             (pin: { userId: string }) => pin.userId === note.author.id,
           );
-         
+
           return (
-            <Card sx={{ width: 385,
-                      display: "flex",
-                      flexDirection: "column",
-                      minHeight: 270, }} key={note.id}>
+            <Card
+              sx={{
+                width: 385,
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 270,
+              }}
+              key={note.id}
+            >
               <CardActionArea sx={{ flexGrow: 1 }}>
-                <CardContent >
-                  {
-                    note.isPublic ? (<Chip label="Public" size="small" sx={{position: 'absolute', top:4, right:4}}/>) :  (<Chip label="Private" size="small" sx={{position: 'absolute', top:4, right:4}}/>)
-                  }
+                <CardContent>
+                  {note.isPublic ? (
+                    <Chip
+                      label="Public"
+                      size="small"
+                      sx={{ position: "absolute", top: 4, right: 4 }}
+                    />
+                  ) : (
+                    <Chip
+                      label="Private"
+                      size="small"
+                      sx={{ position: "absolute", top: 4, right: 4 }}
+                    />
+                  )}
                   <Typography gutterBottom variant="h6" component="div">
                     {note.title}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
                     {note.synopsis.length > 140
-                            ? `${note.synopsis.slice(0, 200)}...`
-                            : note.synopsis}
+                      ? `${note.synopsis.slice(0, 200)}...`
+                      : note.synopsis}
                   </Typography>
                 </CardContent>
               </CardActionArea>

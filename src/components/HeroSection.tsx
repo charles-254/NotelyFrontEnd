@@ -89,13 +89,14 @@ function HeroSection() {
             <Button
               color="secondary"
               variant="contained"
+              href="/login"
               sx={{
                 fontSize: "1.3rem",
                 fontWeight: 500,
               }}
               endIcon={<MdOutlineArrowOutward />}
             >
-              Explore
+              Sign in
             </Button>
             <Button
               color="primary"

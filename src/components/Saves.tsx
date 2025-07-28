@@ -117,10 +117,15 @@ function Saves() {
           savedNotes.map((note: any) => {
             const isOwner = note.note.authorId === userData.id;
             return (
-              <Card sx={{ width: 385,
-                      display: "flex",
-                      flexDirection: "column",
-                      minHeight: 270, }} key={note.id}>
+              <Card
+                sx={{
+                  width: 385,
+                  display: "flex",
+                  flexDirection: "column",
+                  minHeight: 270,
+                }}
+                key={note.id}
+              >
                 <CardActionArea sx={{ flexGrow: 1 }}>
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
@@ -131,8 +136,8 @@ function Saves() {
                       sx={{ color: "text.secondary" }}
                     >
                       {note.note.synopsis.length > 140
-                            ? `${note.note.synopsis.slice(0, 200)}...`
-                            : note.note.synopsis}
+                        ? `${note.note.synopsis.slice(0, 200)}...`
+                        : note.note.synopsis}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -156,11 +161,16 @@ function Saves() {
                       {isOwner ? (
                         <Typography>By you</Typography>
                       ) : (
-                        <Typography noWrap sx={{
-                          maxWidth: 110,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}>{note.note.author.username}</Typography>
+                        <Typography
+                          noWrap
+                          sx={{
+                            maxWidth: 110,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {note.note.author.username}
+                        </Typography>
                       )}
                     </Link>
                     <Typography variant="body2" color="text.secondary">

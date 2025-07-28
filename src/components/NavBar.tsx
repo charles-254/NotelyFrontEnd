@@ -5,7 +5,8 @@ import {
   Stack,
   Button,
   Link,
-  Avatar, Box
+  Avatar,
+  Box,
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 
@@ -28,10 +29,12 @@ function Navbar() {
             my: ".3rem",
           }}
         >
-          <Typography variant="h4" color="primary" fontWeight={600}>
-            <Box component={'img'} src="/logo.png"/>
-            Notely
-          </Typography>
+          <Stack direction={"row"} spacing={".5rem"} alignItems={"center"}>
+            <Box component={"img"} src="/logo.png" width={50} />
+            <Typography variant="h4" color="primary" fontWeight={600}>
+              Notely
+            </Typography>
+          </Stack>
           <Stack direction="row" spacing={3} sx={{ alignItems: "center" }}>
             <Link variant="h6" href="/profile" fontSize={"1.1rem"}>
               My Notes
@@ -83,9 +86,12 @@ function Navbar() {
             alignSelf: "center",
           }}
         >
-          <Typography variant="h4" color="primary" fontWeight={600}>
-            Notely
-          </Typography>
+          <Stack direction={"row"} spacing={".5rem"} alignItems={"center"}>
+            <Box component={"img"} src="/logo.png" width={50} />
+            <Typography variant="h4" color="primary" fontWeight={600}>
+              Notely
+            </Typography>
+          </Stack>
           <Stack direction="row" spacing={3}>
             <Button
               href="/login"

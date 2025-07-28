@@ -24,6 +24,7 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
 import axiosInstance from "../apis/axios";
+import { useNavigate } from "react-router-dom";
 
 type User = {
   firstName: string;
@@ -43,14 +44,12 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["register-user"],
     mutationFn: async (userData: User) => {
-      const response = await axiosInstance.post(
-        "/api/auth/register",
-        userData,
-      );
+      const response = await axiosInstance.post("/api/auth/register", userData);
       console.log(response.data);
       return response.data;
     },
@@ -63,6 +62,7 @@ function Register() {
     },
     onSuccess: (data) => {
       toast.info(data.message);
+      navigate("/login");
     },
   });
   const registerSchema = z

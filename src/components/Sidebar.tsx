@@ -239,9 +239,6 @@ function Sidebar() {
               </Tooltip>
             )}
 
-            
-            
-
             {open ? (
               <ListItemButton
                 selected={currentPath === "/trash"}
