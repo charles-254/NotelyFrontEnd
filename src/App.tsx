@@ -24,6 +24,7 @@ import Profile from "./pages/Profile";
 import EditNote from "./pages/EditNote";
 import ReadNote from "./pages/ReadNote";
 import Trash from "./pages/Trash";
+import Protected from "./components/Protected";
 
 function App() {
   const client = new QueryClient();
@@ -48,26 +49,142 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/settings/account" element={<AccountSecurityPage />} />
-          <Route path="/settings/appearance" element={<AppearanceAndTheme />} />
-          <Route path="/settings/sync-backup" element={<SyncBackup />} />
-          <Route path="/settings/help-center" element={<HelpCenter />} />
-          <Route path="/settings/beta-tester" element={<BetaTester />} />
-          <Route path="/settings/whats-new" element={<WhatsNew />} />
+          <Route
+            path="/home"
+            element={
+              <Protected>
+                <HomePage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Protected>
+                <Settings />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/account"
+            element={
+              <Protected>
+                <AccountSecurityPage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/appearance"
+            element={
+              <Protected>
+                <AppearanceAndTheme />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/sync-backup"
+            element={
+              <Protected>
+                <SyncBackup />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/help-center"
+            element={
+              <Protected>
+                <HelpCenter />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/beta-tester"
+            element={
+              <Protected>
+                <BetaTester />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/whats-new"
+            element={
+              <Protected>
+                <WhatsNew />
+              </Protected>
+            }
+          />
           <Route
             path="/settings/reports-violations"
-            element={<ReportsAndViolationsCenter />}
+            element={
+              <Protected>
+                <ReportsAndViolationsCenter />
+              </Protected>
+            }
           />
-          <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/settings/terms" element={<TermsOfServicePage />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/notes/create" element={<CreateNote />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/notes/:noteId/edit" element={<EditNote />} />
-          <Route path="/notes/:noteId" element={<ReadNote />} />
-          <Route path="/trash" element={<Trash />} />
+          <Route
+            path="/settings/privacy-policy"
+            element={
+              <Protected>
+                <PrivacyPolicy />
+              </Protected>
+            }
+          />
+          <Route
+            path="/settings/terms"
+            element={
+              <Protected>
+                <TermsOfServicePage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/contact-us"
+            element={
+              <Protected>
+                <ContactUs />
+              </Protected>
+            }
+          />
+          <Route
+            path="/notes/create"
+            element={
+              <Protected>
+                <CreateNote />
+              </Protected>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Protected>
+                <Profile />
+              </Protected>
+            }
+          />
+          <Route
+            path="/notes/:noteId/edit"
+            element={
+              <Protected>
+                <EditNote />
+              </Protected>
+            }
+          />
+          <Route
+            path="/notes/:noteId"
+            element={
+              <Protected>
+                <ReadNote />
+              </Protected>
+            }
+          />
+          <Route
+            path="/trash"
+            element={
+              <Protected>
+                <Trash />
+              </Protected>
+            }
+          />
         </Routes>
       </ThemeProvider>
     </QueryClientProvider>

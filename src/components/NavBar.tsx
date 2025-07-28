@@ -64,7 +64,8 @@ function Navbar() {
                   color: "white",
                 }}
               >
-                {userData.firstName[0].toUpperCase()}{userData.lastName[0].toUpperCase()}
+                {userData.firstName[0].toUpperCase()}
+                {userData.lastName[0].toUpperCase()}
               </Avatar>
             )}
           </Stack>
