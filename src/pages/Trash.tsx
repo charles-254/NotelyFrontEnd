@@ -13,6 +13,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Trash() {
   const { isLoading, data } = useQuery({
@@ -26,6 +27,7 @@ function Trash() {
 const restoreMutation = useMutation({
   mutationFn: (noteId: string) => axiosInstance.patch(`/api/notes/${noteId}/restore`),
   onSuccess: () => {
+    toast.success("Note restored successfully")
     queryClient.invalidateQueries({queryKey: ["get-trashed-notes"]});
   },
 });
@@ -97,7 +99,7 @@ const restoreMutation = useMutation({
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button onClick={() => restoreMutation.mutate(note.id)}>Restore</Button>
+                <Button onClick={() => restoreMutation.mutate(note.id)} loading={restoreMutation.isPending}>Restore</Button>
               </CardActions>
             </Card>
           ))}
