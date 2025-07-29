@@ -105,9 +105,7 @@ function Register() {
     const { confirmPassword: _, ...validUser } = result.data;
     mutate(validUser);
   }
-  const handleGoogleLogin = () => {
-    window.location.href = "http://127.0.0.1:3000/api/auth/google";
-  };
+
   
   return (
     <Stack
@@ -423,7 +421,6 @@ function Register() {
             <Typography textAlign={"center"}>Continue with</Typography>
             <IconButton
               sx={{ height: "fit-content", width: "fit-content" }}
-              onClick={handleGoogleLogin}
             >
               <FcGoogle size={"2.5rem"} />
             </IconButton>
