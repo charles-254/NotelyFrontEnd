@@ -22,10 +22,10 @@ function OAuthCallback() {
     };
 
     fetchUser();
-  }, [navigate]);
+  }, []);
 
   return (
-    <Stack>
+    <Stack direction='row' spacing={'1rem'}>
         <CircularProgress size={50}/>
         <Typography>Logging in ...</Typography>
     </Stack>
