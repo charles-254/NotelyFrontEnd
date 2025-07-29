@@ -24,7 +24,7 @@ function Trash() {
     },
   });
   const queryClient = useQueryClient();
-const restoreMutation = useMutation({
+const {mutate, isPending} = useMutation({
   mutationFn: (noteId: string) => axiosInstance.patch(`/api/notes/${noteId}/restore`),
   onSuccess: () => {
     toast.success("Note restored successfully")
@@ -99,7 +99,7 @@ const restoreMutation = useMutation({
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button onClick={() => restoreMutation.mutate(note.id)} loading={restoreMutation.isPending}>Restore</Button>
+                <Button onClick={() => mutate(note.id)} loading={isPending}>Restore</Button>
               </CardActions>
             </Card>
           ))}

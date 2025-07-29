@@ -72,7 +72,7 @@ function ReadLaters() {
               </CardActionArea>
               <CardActions>
                 <Button size="small" color="primary">
-                  readmore
+                  read more
                 </Button>
               </CardActions>
             </Card>

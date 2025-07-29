@@ -201,7 +201,7 @@ function Saves() {
                       color="primary"
                       onClick={() => navigate(`/notes/${note.noteId}`)}
                     >
-                      readmore
+                      read more
                     </Button>
                   </Stack>
                 </CardActions>

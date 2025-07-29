@@ -335,7 +335,7 @@ function UserNotes() {
                   endIcon={<FiArrowUpRight />}
                   onClick={() => navigate(`/notes/${note.id}`)}
                 >
-                  readmore
+                  read more
                 </Button>
               </CardActions>
             </Card>
