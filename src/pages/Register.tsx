@@ -24,7 +24,6 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
 import axiosInstance from "../apis/axios";
-import { useNavigate } from "react-router-dom";
 
 type User = {
   firstName: string;
@@ -44,7 +43,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const navigate = useNavigate();
+
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["register-user"],
@@ -62,7 +61,6 @@ function Register() {
     },
     onSuccess: (data) => {
       toast.info(data.message);
-      navigate("/login");
     },
   });
   const registerSchema = z
@@ -107,6 +105,10 @@ function Register() {
     const { confirmPassword: _, ...validUser } = result.data;
     mutate(validUser);
   }
+  const handleGoogleLogin = () => {
+    window.location.href = "http://127.0.0.1:3000/api/auth/google";
+  };
+  
   return (
     <Stack
       justifyContent={"center"}
@@ -419,7 +421,10 @@ function Register() {
           </Divider>
           <Stack justifyContent={"center"} gap={4}>
             <Typography textAlign={"center"}>Continue with</Typography>
-            <IconButton sx={{ height: "fit-content", width: "fit-content" }}>
+            <IconButton
+              sx={{ height: "fit-content", width: "fit-content" }}
+              onClick={handleGoogleLogin}
+            >
               <FcGoogle size={"2.5rem"} />
             </IconButton>
             <IconButton sx={{ height: "fit-content", width: "fit-content" }}>

@@ -24,6 +24,7 @@ import Profile from "./pages/Profile";
 import EditNote from "./pages/EditNote";
 import ReadNote from "./pages/ReadNote";
 import Trash from "./pages/Trash";
+import OAuthCallback from "./components/OAuthCallback";
 import Protected from "./components/Protected";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           transition={Bounce}
         />
         <Routes>
+          <Route path="/oauth-callback" element={<OAuthCallback />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

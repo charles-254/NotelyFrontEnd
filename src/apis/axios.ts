@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://notely-n81l.onrender.com",
+  baseURL: "http://127.0.0.1:3000",
   withCredentials: true,
 });
 
 export default axiosInstance;
+
+// baseURL: "https://notely-n81l.onrender.com",

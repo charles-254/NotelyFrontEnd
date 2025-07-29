@@ -66,6 +66,9 @@ function Login() {
       navigate("/home");
     },
   });
+  const handleGoogleLogin = () => {
+    window.location.href = "http://127.0.0.1:3000/api/auth/google";
+  };
 
   function handleLogin() {
     const userData = { identifier, password };
@@ -263,7 +266,7 @@ function Login() {
 
           <Stack justifyContent={"center"} gap={4}>
             <Typography textAlign={"center"}>Continue with</Typography>
-            <IconButton sx={{ height: "fit-content", width: "fit-content" }}>
+            <IconButton sx={{ height: "fit-content", width: "fit-content" }} onClick={handleGoogleLogin}>
               <FcGoogle size={"2.5rem"} />
             </IconButton>
             <IconButton sx={{ height: "fit-content", width: "fit-content" }}>
