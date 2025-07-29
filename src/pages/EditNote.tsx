@@ -70,7 +70,7 @@ function EditNote() {
   }, [data]);
 
   const { isPending, mutate } = useMutation({
-    mutationKey: ["create-note"],
+    mutationKey: ["edit-note"],
     mutationFn: async (note: Note) => {
       const response = await axiosInstance.patch(`/api/notes/${noteId}`, note);
       return response.data;
@@ -79,7 +79,7 @@ function EditNote() {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
       } else {
-        toast.error("Failed to create note.Please try Again.");
+        toast.error("Failed to update note.Please try Again.");
       }
     },
     onSuccess: (data) => {

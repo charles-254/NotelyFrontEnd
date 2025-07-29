@@ -9,7 +9,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
@@ -22,7 +22,13 @@ function Trash() {
       return response.data;
     },
   });
-  console.log(data);
+  const queryClient = useQueryClient();
+const restoreMutation = useMutation({
+  mutationFn: (noteId: string) => axiosInstance.patch(`/api/notes/${noteId}/restore`),
+  onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ["get-trashed-notes"]});
+  },
+});
 
   const ITEMS_PER_PAGE = 6;
   const [page, setPage] = useState(1);
@@ -72,19 +78,26 @@ function Trash() {
           alignItems="flex-start"
         >
           {trashedNotes.map((note: any) => (
-            <Card sx={{ width: 360 }} key={note.id}>
-              <CardActionArea>
+            <Card sx={{
+                width: 385,
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 270,
+              }} key={note.id}>
+              <CardActionArea sx={{ flexGrow: 1 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5">
                     {note.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {note.synopsis}
+                    {note.synopsis.length > 140
+                      ? `${note.synopsis.slice(0, 200)}...`
+                      : note.synopsis}
                   </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button>Restore</Button>
+                <Button onClick={() => restoreMutation.mutate(note.id)}>Restore</Button>
               </CardActions>
             </Card>
           ))}
